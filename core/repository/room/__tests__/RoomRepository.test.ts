@@ -24,7 +24,7 @@ describe('RoomRepository', () => {
 
   test('getExpire', async() => {
     const res = await roomRepository.getExpire(roomID)
-    expect(Math.floor(res / (60*60))).toBe(71)
+    expect(Math.floor(res / (60*60))).toBe(23)
   })
 
   test('getExpire by non-existent key', async() => {
