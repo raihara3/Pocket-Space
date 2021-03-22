@@ -13,8 +13,9 @@ services:
   nextjs:
     ports:
       - "3000:3000"
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/raihara3/communication-webar
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     links:
       - redis
