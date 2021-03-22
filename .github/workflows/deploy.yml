@@ -15,20 +15,20 @@ env:
   REDIS_PORT: ${{ secrets.REDIS_PORT }}
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+#   test:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+#     steps:
+#       - uses: actions/checkout@v2
 
-      - name: Install modules
-        run: yarn
+#       - name: Install modules
+#         run: yarn
 
-      - name: Run ESLint
-        run: yarn run lint
+#       - name: Run ESLint
+#         run: yarn run lint
 
-      - name: Run Jest
-        run: yarn test
+#       - name: Run Jest
+#         run: yarn test
 
 #   publish:
 #     needs: test
@@ -66,7 +66,7 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          script: cd ${{ secrets.PROJECT_PATH }} && git pull
+          script: cd ${{ secrets.PROJECT_PATH }} && git pull origin master
 
   slackNotification:
     needs: deploy
