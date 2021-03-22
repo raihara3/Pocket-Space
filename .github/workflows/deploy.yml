@@ -15,47 +15,48 @@ env:
   REDIS_PORT: ${{ secrets.REDIS_PORT }}
 
 jobs:
-#   test:
-#     runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Install modules
-#         run: yarn
+      - name: Install modules
+        run: yarn
 
-#       - name: Run ESLint
-#         run: yarn run lint
+      - name: Run ESLint
+        run: yarn run lint
 
-#       - name: Run Jest
-#         run: yarn test
+      - name: Run Jest
+        run: yarn test
 
-#   publish:
-#     needs: test
-#     runs-on: ubuntu-latest
-#     env:
-#       IMAGE_NAME: communication-webar
-#     steps:
-#       - uses: actions/checkout@v2
-#       - uses: actions/cache@v2
-#         with:
-#           path: /home/runner/.cache/docker-build
-#           key: ${{ runner.os }}-communication-webar-docker-${{ hashFiles('Dockerfile') }}-${{ hashFiles('package.json') }}-${{ hashFiles('package-lock.json') }}
-#           restore-keys: |
-#             ${{ runner.os }}-communication-webar-docker-
-#       - uses: crazy-max/ghaction-docker-buildx@v1
-#         with:
-#           buildx-version: latest
-#       - run: |
-#           IMAGE_PATH=ghcr.io/${OWNER}/${IMAGE_NAME}
-#           TAG=${GITHUB_REF##*/}
-#           opt=''
-#           [ -d /home/runner/.cache/docker-build ] && opt='--cache-from type=local,src=/home/runner/.cache/docker-build'
-#           docker login ghcr.io -u $OWNER -p ${{ secrets.CR_PAT }}
-#           docker buildx build --output type=docker,name=$IMAGE_PATH:$TAG,push=false ${opt} --cache-to type=local,mode=max,dest=/home/runner/.cache/docker-build .
-#           docker push $IMAGE_PATH:$TAG
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: communication-webar
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: /home/runner/.cache/docker-build
+          key: ${{ runner.os }}-communication-webar-docker-${{ hashFiles('Dockerfile') }}-${{ hashFiles('package.json') }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-communication-webar-docker-
+      - uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          buildx-version: latest
+      - run: |
+          IMAGE_PATH=ghcr.io/${OWNER}/${IMAGE_NAME}
+          TAG=${GITHUB_REF##*/}
+          opt=''
+          [ -d /home/runner/.cache/docker-build ] && opt='--cache-from type=local,src=/home/runner/.cache/docker-build'
+          docker login ghcr.io -u $OWNER -p ${{ secrets.CR_PAT }}
+          docker buildx build --output type=docker,name=$IMAGE_PATH:$TAG,push=false ${opt} --cache-to type=local,mode=max,dest=/home/runner/.cache/docker-build .
+          docker push $IMAGE_PATH:$TAG
           
   deploy:
+    needs: publish
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
@@ -71,7 +72,7 @@ jobs:
             cd ${{ secrets.PROJECT_PATH }}
             git pull origin master
             docker pull ghcr.io/raihara3/communication-webar:master
-            docker restart quizzical_grothendieck
+            docker restart quizzical_grothendieck --link communication-webar_redis_1
 
   slackNotification:
     needs: deploy
