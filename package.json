@@ -30,7 +30,6 @@
     ]
   },
   "dependencies": {
-    "@apollo/client": "^3.3.6",
     "@babel/preset-react": "^7.12.13",
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
@@ -42,8 +41,6 @@
     "@types/socket.io-client": "^1.4.34",
     "@types/styled-components": "^5.1.7",
     "@types/three": "^0.125.3",
-    "apollo-datasource-rest": "^0.9.5",
-    "apollo-server-micro": "^2.19.0",
     "autoprefixer": "^9.8.6",
     "eslint-config-airbnb": "^18.2.1",
     "graphql-tag": "^2.11.0",

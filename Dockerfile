@@ -16,8 +16,6 @@ COPY styles/ styles/
 COPY threeComponents/ threeComponents/
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY apollo/ apollo/
-
 RUN npm run build
 
 EXPOSE 3000
