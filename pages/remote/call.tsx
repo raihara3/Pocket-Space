@@ -8,6 +8,7 @@ import Video from '../../components/atoms/Video'
 import WebGL from '../../src/WebGL'
 import { createToolBar, onClickButton } from '../../threeComponents/molecules/createToolBar'
 import { receiveMessagingHandler, sendMeshHandler } from '../../src/emitter/Messaging'
+import PageHead from '../../components/layout/PageHead'
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
 import Card from '../../components/molecules/Card'
@@ -109,6 +110,7 @@ const Call = () => {
 
   return (
     <>
+      <PageHead />
       <Header />
       <Wrap>
         {memberList.map(id => (

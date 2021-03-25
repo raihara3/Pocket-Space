@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core'
 import { Alert } from '@material-ui/lab'
 import { FileCopy } from '@material-ui/icons'
 import styled from 'styled-components'
+import PageHead from '../components/layout/PageHead'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
 import Card from '../components/molecules/Card'
@@ -34,6 +35,7 @@ const Index = () => {
 
   return (
     <>
+      <PageHead />
       <Header />
       <Wrap>
         {hasError && (
