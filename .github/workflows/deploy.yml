@@ -54,7 +54,7 @@ jobs:
           docker login ghcr.io -u $OWNER -p ${{ secrets.CR_PAT }}
           docker buildx build --output type=docker,name=$IMAGE_PATH:$TAG,push=false ${opt} --cache-to type=local,mode=max,dest=/home/runner/.cache/docker-build .
           docker push $IMAGE_PATH:$TAG
-          
+
   deploy:
     needs: publish
     if: github.ref == 'refs/heads/master'
@@ -73,6 +73,7 @@ jobs:
             git pull origin master
             docker pull ghcr.io/raihara3/communication-webar:master
             docker restart communication-webar_nextjs_1
+            docker image prune
 
   slackNotification:
     needs: deploy
@@ -85,5 +86,3 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-

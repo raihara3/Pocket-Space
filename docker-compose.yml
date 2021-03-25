@@ -13,7 +13,7 @@ services:
   nextjs:
     ports:
       - "3000:3000"
-    image: ghcr.io/raihara3/communication-webar
+    image: ghcr.io/raihara3/communication-webar:master
     # build:
     #   context: .
     #   dockerfile: Dockerfile
