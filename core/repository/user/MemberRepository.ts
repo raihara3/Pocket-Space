@@ -2,19 +2,16 @@ import redis from 'redis'
 
 class MemberRepository {
   inner: redis.RedisClient
-  prefix: string
 
   constructor(inner) {
     // DB 1: member list
     this.inner = inner
-    this.prefix = 'members_'
   }
 
   add(roomID: string, userID: string) {
-    const key = this.prefix + roomID
     return new Promise((resolve, reject) => {
-      this.inner.rpush(key, userID)
-      this.inner.expire(key, 60 * 60 * 24 * 1, (error, reply) => {
+      this.inner.rpush(roomID, userID)
+      this.inner.expire(roomID, 60 * 60 * 24 * 1, (error, reply) => {
         if(error) {
           reject(error)
         }
@@ -24,9 +21,8 @@ class MemberRepository {
   }
 
   list(roomID: string): Promise<Array<string>> {
-    const key = this.prefix + roomID
     return new Promise((resolve, reject) => {
-      this.inner.lrange(key, 0, -1, (error, reply) => {
+      this.inner.lrange(roomID, 0, -1, (error, reply) => {
         if(error) {
           reject(error)
         }
@@ -36,9 +32,8 @@ class MemberRepository {
   }
 
   remove(roomID: string, userID: string) {
-    const key = this.prefix + roomID
     return new Promise((resolve, reject) => {
-      this.inner.lrem(key, 0, userID, (error, reply) => {
+      this.inner.lrem(roomID, 0, userID, (error, reply) => {
         if(error) {
           reject(error)
         }

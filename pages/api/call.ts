@@ -30,29 +30,23 @@ const callHandler = async(req, res) => {
     res.end()
   }
 
-  // const roomStorage = redis.createClient({host: process.env.REDIS_HOST, db: 0})
-  // const memberStorage = redis.createClient({host: process.env.REDIS_HOST, db: 1})
-  // const meshStorage = redis.createClient({host: process.env.REDIS_HOST, db: 2})
-  // const userNameStorage = redis.createClient({host: process.env.REDIS_HOST, db: 3})
-  const storage = redis.createClient({
-    host: process.env.REDIS_HOST,
-    password: process.env.REDIS_PASS,
-    port: Number(process.env.REDIS_PORT)
-  })
+  const roomStorage = redis.createClient({host: process.env.REDIS_HOST, db: 0})
+  const memberStorage = redis.createClient({host: process.env.REDIS_HOST, db: 1})
+  const meshStorage = redis.createClient({host: process.env.REDIS_HOST, db: 2})
+  const userNameStorage = redis.createClient({host: process.env.REDIS_HOST, db: 3})
 
   const io = new Server(res.socket.server)
-  // const pubClient = redis.createClient({host: process.env.REDIS_HOST})
-  const pubClient = storage
+  const pubClient = redis.createClient({host: process.env.REDIS_HOST})
   const subClient = pubClient.duplicate()
   io.adapter(createAdapter({ pubClient, subClient }))
   pubClient.on('error', (e) => console.error(e))
   subClient.on('error', (e) => console.error(e))
   io.of('/').adapter.on('error', (e) => console.error(e))
 
-  const roomRepository = new RoomRepository(storage)
-  const memberRepository = new MemberRepository(storage)
-  const meshRepository = new MeshRepository(storage)
-  const userNameRepository = new UserNameRepository(storage)
+  const roomRepository = new RoomRepository(roomStorage)
+  const memberRepository = new MemberRepository(memberStorage)
+  const meshRepository = new MeshRepository(meshStorage)
+  const userNameRepository = new UserNameRepository(userNameStorage)
   const hasRoom = await new GetRoomService(roomRepository).get(roomID)
   if(!hasRoom) {
     res.status(404).json({message: 'Not Found'})
@@ -102,11 +96,10 @@ const callHandler = async(req, res) => {
   res.socket.server.io = io
   res.end()
 
-  // roomStorage.on('error', (e) => console.error(e))
-  // memberStorage.on('error', (e) => console.error(e))
-  // meshStorage.on('error', (e) => console.error(e))
-  // userNameStorage.on('error', (e) => console.error(e))
-  storage.on('error', (e) => console.error(e))
+  roomStorage.on('error', (e) => console.error(e))
+  memberStorage.on('error', (e) => console.error(e))
+  meshStorage.on('error', (e) => console.error(e))
+  userNameStorage.on('error', (e) => console.error(e))
 }
 
 export const config = {

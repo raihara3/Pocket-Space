@@ -2,20 +2,17 @@ import redis from 'redis'
 
 class RoomRepository {
   inner: redis.RedisClient
-  prefix: string
 
   constructor(inner) {
     // DB 0: room list
     this.inner = inner
-    this.prefix = 'room_'
   }
 
   add(roomID: string) {
     if(!roomID) return
-    const key = this.prefix + roomID
     return new Promise((resolve, reject) => {
       this.inner.setex(
-        key,
+        roomID,
         60 * 60 * 24 * 1,
         new Date().toLocaleString("ja-JP", {
           timeZone: "Asia/Tokyo"
@@ -31,9 +28,8 @@ class RoomRepository {
   }
 
   get(roomID: string) {
-    const key = this.prefix + roomID
     return new Promise((resolve, reject) => {
-      this.inner.get(key, (error, reply) => {
+      this.inner.get(roomID, (error, reply) => {
         if(error) {
           reject(error)
           return
@@ -44,9 +40,8 @@ class RoomRepository {
   }
 
   getExpire(roomID: string): Promise<number> {
-    const key = this.prefix + roomID
     return new Promise((resolve, reject) => {
-      this.inner.ttl(key, (error, reply) => {
+      this.inner.ttl(roomID, (error, reply) => {
         if(error) {
           reject(error)
           return

@@ -14,7 +14,7 @@ const getRoomHandler = async(req, res) => {
 
   const roomStorage = redis.createClient({
     host: process.env.REDIS_HOST,
-    // db: 0,
+    db: 0,
     password: process.env.REDIS_PASS,
     port: Number(process.env.REDIS_PORT),
     retry_strategy: options => {
