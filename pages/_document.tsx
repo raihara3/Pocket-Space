@@ -11,7 +11,8 @@ class MyDocument extends Document {
     return (
       <Html lang='en'>
         <Head>
-          <title>WebAR communication</title>
+          <title>AR Meet</title>
+          <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         </Head>
         <body>
           <Main />

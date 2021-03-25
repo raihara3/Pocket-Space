@@ -7,9 +7,9 @@ const Header = () => {
   return (
     <HeacerContainer>
       <ImageBox>
-        <Image src='/symbol.png' width='45' height='45' />
+        <Image src='/symbol.png' width={45} height={45} alt='' />
       </ImageBox>
-      <PageTitle>Pocket Space</PageTitle>
+      <PageTitle>AR Meet</PageTitle>
     </HeacerContainer>
   )
 }
