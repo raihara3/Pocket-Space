@@ -64,6 +64,7 @@ const Index = () => {
           description='Copy the room URL and share it with your friends!'
         >
           <InputField
+            id='roomID'
             inputRef={roomURLBox}
             defaultValue={roomURL}
             readonly={true}
