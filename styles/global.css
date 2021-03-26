@@ -46,8 +46,8 @@ body {
 /* A elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
-  color: inherit;
-  text-decoration: none;
+  color: #006bf3;
+  text-decoration: underline;
 }
 
 /* Make images easier to work with */

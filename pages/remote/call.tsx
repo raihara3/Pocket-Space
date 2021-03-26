@@ -114,10 +114,10 @@ const Call = () => {
         {memberList.map(id => (
           <Video id={id} key={id} hidden={true} />
         ))}
-        {(expire > 0 && expire <= 24) && (
+        {(expire > 0 && expire <= 6) && (
           <ErrorBox>
             <Alert variant="filled" severity="warning">
-              This Room has 24 hours left to expire.<br />
+              This Room has 6 hours left to expire.<br />
               <Link href='/'>
                 Create a new Room
               </Link>
@@ -165,7 +165,7 @@ const Call = () => {
           />
           {isSupported ? (
             <Button
-              variant='outlined'
+              variant='contained'
               color='primary'
               onClick={() => onStartWebAR()}
               disabled={hasError || !responseStatus}

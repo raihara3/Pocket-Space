@@ -30,13 +30,18 @@ const callHandler = async(req, res) => {
     res.end()
   }
 
-  const roomStorage = redis.createClient({host: process.env.REDIS_HOST, db: 0})
-  const memberStorage = redis.createClient({host: process.env.REDIS_HOST, db: 1})
-  const meshStorage = redis.createClient({host: process.env.REDIS_HOST, db: 2})
-  const userNameStorage = redis.createClient({host: process.env.REDIS_HOST, db: 3})
+  const redisOptions = {
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASS,
+    port: Number(process.env.REDIS_PORT)
+  }
+  const roomStorage = redis.createClient({...redisOptions, db: 0,})
+  const memberStorage = redis.createClient({...redisOptions, db: 1})
+  const meshStorage = redis.createClient({...redisOptions, db: 2})
+  const userNameStorage = redis.createClient({...redisOptions, db: 3})
 
   const io = new Server(res.socket.server)
-  const pubClient = redis.createClient({host: process.env.REDIS_HOST})
+  const pubClient = redis.createClient({...redisOptions})
   const subClient = pubClient.duplicate()
   io.adapter(createAdapter({ pubClient, subClient }))
   pubClient.on('error', (e) => console.error(e))

@@ -71,8 +71,8 @@ const Input = styled.input<{readOnly: boolean}>`
   border: 0;
   outline: none;
   background: transparent;
-  color: #ffffff;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
+  color: ${colors.black01};
+  border-bottom: 1px solid ${colors.white02};
 
   ${({readOnly}) => readOnly && `
     color: rgba(255,255,255,0.3);
