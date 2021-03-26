@@ -7,7 +7,9 @@ const Header = () => {
   return (
     <HeacerContainer>
       <ImageBox>
-        <Image src='/symbol.png' width={45} height={45} alt='' />
+        <a href='/'>
+          <Image src='/symbol.png' width={45} height={45} alt='' />
+        </a>
       </ImageBox>
       <PageTitle>AR Meet</PageTitle>
     </HeacerContainer>
@@ -19,7 +21,7 @@ const HeacerContainer = styled.header`
   height: 60px;
   margin: 0 0 20px 0;
   padding: 0 15px;
-  background-color: ${colors.black01};
+  border-bottom: 2px solid ${colors.white02};
 `
 
 const ImageBox = styled.div`

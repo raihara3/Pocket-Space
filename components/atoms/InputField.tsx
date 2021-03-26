@@ -5,6 +5,7 @@ import colors from '../colors'
 interface Props {
   id?: string
   name?: string
+  label?: string
   inputRef?: React.RefObject<HTMLInputElement>
   type?: 'text' | 'number' | 'password'
   readonly?: boolean
@@ -19,6 +20,7 @@ interface Props {
 const InputField: React.FC<Props> = ({
   id,
   name,
+  label,
   inputRef,
   type = 'text',
   readonly = false,
@@ -31,22 +33,25 @@ const InputField: React.FC<Props> = ({
 }) => {
   return (
     <InputBox>
-      <Input
-        id={id}
-        name={name}
-        ref={inputRef}
-        type={type}
-        readOnly={readonly}
-        disabled={disabled}
-        placeholder={placeholder}
-        defaultValue={defaultValue}
-        onChange={(e) => {
-          onChange && onChange(e)
-        }}
-      />
-      {hasError && (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
-      )}
+      <label htmlFor={id}>
+        {label}
+        <Input
+          id={id}
+          name={name}
+          ref={inputRef}
+          type={type}
+          readOnly={readonly}
+          disabled={disabled}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+          onChange={(e) => {
+            onChange && onChange(e)
+          }}
+        />
+        {hasError && (
+          <ErrorMessage>{errorMessage}</ErrorMessage>
+        )}
+      </label>
     </InputBox>
   )
 }

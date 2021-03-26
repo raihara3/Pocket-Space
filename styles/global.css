@@ -30,8 +30,8 @@ ol[role="list"] {
 /* Set core root defaults */
 html {
   scroll-behavior: smooth;
-  background-color: #1F1F1F;
-  color: #ffffff;
+  background-color: #f9f9f9;
+  color: #484848;
   font-family: 'Rubik', sans-serif;
   font-size: 14px;
 }

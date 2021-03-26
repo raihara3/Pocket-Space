@@ -4,14 +4,16 @@ exports[`disabled 1`] = `
 <div
   className="InputField__InputBox-xsvhdm-0 ikXCMw"
 >
-  <input
-    className="InputField__Input-xsvhdm-1 fuxtoD"
-    disabled={true}
-    onChange={[Function]}
-    placeholder="Input field"
-    readOnly={false}
-    type="text"
-  />
+  <label>
+    <input
+      className="InputField__Input-xsvhdm-1 fuxtoD"
+      disabled={true}
+      onChange={[Function]}
+      placeholder="Input field"
+      readOnly={false}
+      type="text"
+    />
+  </label>
 </div>
 `;
 
@@ -19,19 +21,21 @@ exports[`hasError 1`] = `
 <div
   className="InputField__InputBox-xsvhdm-0 ikXCMw"
 >
-  <input
-    className="InputField__Input-xsvhdm-1 fuxtoD"
-    disabled={false}
-    onChange={[Function]}
-    placeholder="Input field"
-    readOnly={false}
-    type="text"
-  />
-  <span
-    className="InputField__ErrorMessage-xsvhdm-2 fzvgZg"
-  >
-    has error!
-  </span>
+  <label>
+    <input
+      className="InputField__Input-xsvhdm-1 fuxtoD"
+      disabled={false}
+      onChange={[Function]}
+      placeholder="Input field"
+      readOnly={false}
+      type="text"
+    />
+    <span
+      className="InputField__ErrorMessage-xsvhdm-2 fzvgZg"
+    >
+      has error!
+    </span>
+  </label>
 </div>
 `;
 
@@ -39,14 +43,16 @@ exports[`normal 1`] = `
 <div
   className="InputField__InputBox-xsvhdm-0 ikXCMw"
 >
-  <input
-    className="InputField__Input-xsvhdm-1 fuxtoD"
-    disabled={false}
-    onChange={[Function]}
-    placeholder="Input field"
-    readOnly={false}
-    type="text"
-  />
+  <label>
+    <input
+      className="InputField__Input-xsvhdm-1 fuxtoD"
+      disabled={false}
+      onChange={[Function]}
+      placeholder="Input field"
+      readOnly={false}
+      type="text"
+    />
+  </label>
 </div>
 `;
 
@@ -54,13 +60,15 @@ exports[`readOnly 1`] = `
 <div
   className="InputField__InputBox-xsvhdm-0 ikXCMw"
 >
-  <input
-    className="InputField__Input-xsvhdm-1 beteWP"
-    disabled={false}
-    onChange={[Function]}
-    placeholder="Input field"
-    readOnly={true}
-    type="text"
-  />
+  <label>
+    <input
+      className="InputField__Input-xsvhdm-1 beteWP"
+      disabled={false}
+      onChange={[Function]}
+      placeholder="Input field"
+      readOnly={true}
+      type="text"
+    />
+  </label>
 </div>
 `;
