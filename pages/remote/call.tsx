@@ -49,7 +49,7 @@ const Call = () => {
       return
     }
 
-    const socket = await io(process.env.PROJECT_URL ?? '')
+    const socket = await io()
     const canvas = document.getElementById('webAR') as HTMLCanvasElement
     const webGL = new WebGL(canvas)
     createToolBar(webGL.scene)
