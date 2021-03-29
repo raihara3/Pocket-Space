@@ -13,6 +13,7 @@ env:
   REDIS_HOST: ${{ secrets.REDIS_HOST }}
   REDIS_PASS: ${{ secrets.REDIS_PASS }}
   REDIS_PORT: ${{ secrets.REDIS_PORT }}
+  PROJECT_URL: ${{ secrets.PROJECT_URL }}
 
 jobs:
   test:
