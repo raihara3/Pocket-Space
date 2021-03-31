@@ -2,7 +2,7 @@ name: Package manage
 
 on:
   schedule:
-    - cron: '0 18 * * *'
+    - cron: '0 18 1 * *'
 
 jobs:
   package-update:
