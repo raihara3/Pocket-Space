@@ -2,11 +2,11 @@
 
 exports[`disabled 1`] = `
 <div
-  className="InputField__InputBox-xsvhdm-0 ikXCMw"
+  className="InputField__InputBox-xsvhdm-0 jMqyAe"
 >
   <label>
     <input
-      className="InputField__Input-xsvhdm-1 hGKKrG"
+      className="InputField__Input-xsvhdm-1 dmqiXI"
       disabled={true}
       onChange={[Function]}
       placeholder="Input field"
@@ -19,11 +19,11 @@ exports[`disabled 1`] = `
 
 exports[`hasError 1`] = `
 <div
-  className="InputField__InputBox-xsvhdm-0 ikXCMw"
+  className="InputField__InputBox-xsvhdm-0 jMqyAe"
 >
   <label>
     <input
-      className="InputField__Input-xsvhdm-1 hGKKrG"
+      className="InputField__Input-xsvhdm-1 dmqiXI"
       disabled={false}
       onChange={[Function]}
       placeholder="Input field"
@@ -31,7 +31,7 @@ exports[`hasError 1`] = `
       type="text"
     />
     <span
-      className="InputField__ErrorMessage-xsvhdm-2 fzvgZg"
+      className="InputField__ErrorMessage-xsvhdm-2 jRXaMi"
     >
       has error!
     </span>
@@ -41,11 +41,11 @@ exports[`hasError 1`] = `
 
 exports[`normal 1`] = `
 <div
-  className="InputField__InputBox-xsvhdm-0 ikXCMw"
+  className="InputField__InputBox-xsvhdm-0 jMqyAe"
 >
   <label>
     <input
-      className="InputField__Input-xsvhdm-1 hGKKrG"
+      className="InputField__Input-xsvhdm-1 dmqiXI"
       disabled={false}
       onChange={[Function]}
       placeholder="Input field"
@@ -58,11 +58,11 @@ exports[`normal 1`] = `
 
 exports[`readOnly 1`] = `
 <div
-  className="InputField__InputBox-xsvhdm-0 ikXCMw"
+  className="InputField__InputBox-xsvhdm-0 jMqyAe"
 >
   <label>
     <input
-      className="InputField__Input-xsvhdm-1 jRzMEG"
+      className="InputField__Input-xsvhdm-1 jmKEkY"
       disabled={false}
       onChange={[Function]}
       placeholder="Input field"
