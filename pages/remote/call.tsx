@@ -14,6 +14,7 @@ import Card from '../../components/molecules/Card'
 import InputField from '../../components/atoms/InputField'
 import AudioMedia from '../../src/AudioMedia'
 import { Color } from "three"
+// import { TubePainter } from "../../src/TubePainter"
 
 const Call = () => {
   const [isSupported, setIsSupported] = useState(false)
@@ -64,14 +65,37 @@ const Call = () => {
     webGL.renderer.xr.setSession(session)
     session.addEventListener('end', () => location.reload())
 
+    // const painter = TubePainter()
+    // painter.setSize(0.2)
+    // webGL.scene.add(painter.mesh)
+
+    // const cursor = new THREE.Vector3()
+
     const controller = webGL.renderer.xr.getController(0)
-    controller.addEventListener('selectend', () => {
+    controller.userData.inputType = null
+    controller.addEventListener('selectstart', () => {
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
       const intersects = webGL.raycaster.intersectObjects(webGL.scene.children)
       if(intersects.length && intersects[0].object.name) {
-        onClickButton(intersects[0].object, audioMedia)
+        onClickButton(controller, intersects[0].object, audioMedia)
         return
       }
+      controller.userData.isSelecting = true
+    })
+
+    controller.addEventListener('selectend', () => {
+      controller.userData.isSelecting = false
+    })
+
+    const handleController = () => {
+      if(!controller.userData.isSelecting) return
+
+      // cursor.set(controller.position.x, controller.position.y, controller.position.z).applyMatrix4( controller.matrixWorld )
+      // painter.moveTo(cursor)
+      // painter.lineTo(cursor)
+      // painter.update()
+
+      if(controller.userData.inputType !== 'square') return
 
       const geometry = new THREE.BoxGeometry(0.01, 0.01, 0.01)
       const material = new THREE.MeshBasicMaterial({color: new Color('#ffffff')})
@@ -86,6 +110,12 @@ const Call = () => {
         json: mesh.toJSON(),
         position: controller.position
       })
+      controller.userData.isSelecting = false
+    }
+
+    webGL.renderer.setAnimationLoop(() => {
+      handleController()
+      webGL.renderer.render(webGL.scene, webGL.camera)
     })
   }
 

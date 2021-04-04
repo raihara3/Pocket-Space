@@ -3,20 +3,30 @@ import { Color, Object3D } from 'three'
 import Button from '../atoms/Button'
 import AudioMedia from '../../src/AudioMedia'
 
-export const onClickButton = (button: Object3D, audioMedia: AudioMedia) => {
+export const onClickButton = (controller: THREE.Group, button: Object3D, audioMedia: AudioMedia) => {
   switch(button.name) {
-    case 'mic':
-      onClickMic(button, audioMedia)
+    case 'square': {
+      const buttonIndex = buttonList.map(info => info.name).indexOf(button.name)
+      const isSelected = buttonList[buttonIndex].isSelected
+      onPushIn(isSelected, button)
+      buttonList[buttonIndex].isSelected = !isSelected
+      controller.userData.inputType = !isSelected ? null : button.name
       break
-    case 'exit':
+    }
+    case 'mic': {
+      const enabled = audioMedia.switching()
+      onPushIn(enabled, button)
+      break
+    }
+    case 'exit': {
       location.reload()
       break
+    }
   }
 }
 
-const onClickMic = (mesh: Object3D, audioMedia: AudioMedia) => {
-  const enabled = audioMedia.switching()
-  if(enabled) {
+const onPushIn = (hasPushIn: boolean, mesh: Object3D) => {
+  if(hasPushIn) {
     mesh.scale.z = 0.5
     mesh.position.z = mesh.position.z - (buttonSize.depth/2)
   }else {
@@ -33,6 +43,12 @@ interface ButtonInfo {
 }
 
 const buttonList: Array<ButtonInfo> = [
+  {
+    name: 'square',
+    color: '#e67300',
+    imgSrc: '/textures/square.png',
+    isSelected: false
+  },
   {
     name: 'mic',
     color: '#004E9C',

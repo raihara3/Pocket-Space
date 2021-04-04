@@ -23,9 +23,6 @@ class WebGL {
     this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.setSize(window.innerWidth, window.innerHeight)
     this.renderer.xr.enabled = true
-    this.renderer.setAnimationLoop(() => {
-      this.renderer.render(this.scene, this.camera)
-    })
 
     const aspect = window.innerWidth / window.innerHeight
     window.addEventListener('resize', () => {
