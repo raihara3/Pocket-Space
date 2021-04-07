@@ -14,6 +14,7 @@ import Card from '../../components/molecules/Card'
 import InputField from '../../components/atoms/InputField'
 import AudioMedia from '../../src/AudioMedia'
 import { TubePainter } from "../../src/TubePainter"
+import { BufferGeometry, Color } from "three"
 
 const Call = () => {
   const [isSupported, setIsSupported] = useState(false)
@@ -87,6 +88,13 @@ const Call = () => {
     controller.addEventListener('selectend', () => {
       controller.userData.isSelecting = false
       controller.userData.skipFrames = 2
+
+      const vertices = painter.mesh.geometry.attributes.position.array
+      const geometry = new BufferGeometry()
+      geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+      const material = new THREE.MeshBasicMaterial({color:0x3366cc})
+      const mesh = new THREE.Mesh(geometry, material)
+      webGL.scene.add(mesh)
     })
 
     const handleController = () => {
