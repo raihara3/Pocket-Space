@@ -7,14 +7,13 @@ import { Alert } from '@material-ui/lab'
 import Video from '../../components/atoms/Video'
 import WebGL from '../../src/WebGL'
 import { createToolBar, onClickButton } from '../../threeComponents/molecules/createToolBar'
-import { receiveMessagingHandler } from '../../src/emitter/Messaging'
+import { receiveMessagingHandler, sendMeshHandler } from '../../src/emitter/Messaging'
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
 import Card from '../../components/molecules/Card'
 import InputField from '../../components/atoms/InputField'
 import AudioMedia from '../../src/AudioMedia'
 import { TubePainter } from "../../src/TubePainter"
-import { BufferGeometry, Color } from "three"
 
 const Call = () => {
   const [isSupported, setIsSupported] = useState(false)
@@ -65,10 +64,6 @@ const Call = () => {
     webGL.renderer.xr.setSession(session)
     session.addEventListener('end', () => location.reload())
 
-    const painter = TubePainter()
-    painter.setSize(0.2)
-    webGL.scene.add(painter.mesh)
-
     const cursor = new THREE.Vector3()
 
     const controller = webGL.renderer.xr.getController(0)
@@ -82,6 +77,11 @@ const Call = () => {
         onClickButton(controller, intersects[0].object, audioMedia)
         return
       }
+
+      const painter = TubePainter()
+      painter.setSize(0.2)
+      webGL.scene.add(painter.mesh)
+      controller.userData.painter = painter
       controller.userData.isSelecting = true
     })
 
@@ -89,19 +89,19 @@ const Call = () => {
       controller.userData.isSelecting = false
       controller.userData.skipFrames = 2
 
-      const vertices = painter.mesh.geometry.attributes.position.array
-      const geometry = new BufferGeometry()
-      geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
-      const material = new THREE.MeshBasicMaterial({color:0x3366cc})
-      const mesh = new THREE.Mesh(geometry, material)
-      webGL.scene.add(mesh)
+      const painter = controller.userData.painter
+      const data = painter.mesh.toJSON()
+      sendMeshHandler(socket, {
+        vertices: JSON.stringify(data.geometries[0].data.attributes.position.array),
+        color: data.materials[0].color
+      })
     })
 
     const handleController = () => {
       if(!controller.userData.isSelecting) return
 
       cursor.set(controller.position.x, controller.position.y, controller.position.z).applyMatrix4( controller.matrixWorld )
-
+      const painter = controller.userData.painter
       if(controller.userData.skipFrames >= 0) {
         controller.userData.skipFrames--
         painter.moveTo(cursor)
