@@ -1,4 +1,4 @@
-import { createMeshGroup, Data } from '../../threeComponents/Mesh'
+import { parssePainter, Painter } from '../../threeComponents/Mesh'
 import AudioMedia from '../AudioMedia'
 
 export const receiveMessagingHandler = async(socket: SocketIOClient.Socket, scene: THREE.Scene, audioMedia: AudioMedia, setMemberList: (list: any) => void) => {
@@ -35,9 +35,9 @@ export const receiveMessagingHandler = async(socket: SocketIOClient.Socket, scen
     console.log(`myID: ${myID}, userName: ${userName}`)
   })
 
-  socket.on('getMesh', (data: Array<Data>) => {
+  socket.on('getMesh', (data) => {
     try {
-      createMeshGroup(scene, data)
+      parssePainter(scene, data)
     } catch (e) {
       console.error('Faild to synchronize scene', e)
     }
@@ -89,7 +89,7 @@ export const receiveMessagingHandler = async(socket: SocketIOClient.Socket, scen
   })
 }
 
-export const sendMeshHandler = (socket: SocketIOClient.Socket, data: Data) => {
+export const sendMeshHandler = (socket: SocketIOClient.Socket, data: Painter) => {
   socket.emit('sendMesh', data)
 }
 

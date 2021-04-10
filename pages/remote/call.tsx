@@ -13,8 +13,7 @@ import Footer from '../../components/layout/Footer'
 import Card from '../../components/molecules/Card'
 import InputField from '../../components/atoms/InputField'
 import AudioMedia from '../../src/AudioMedia'
-import { Color } from "three"
-// import { TubePainter } from "../../src/TubePainter"
+import { TubePainter } from "../../src/TubePainter"
 
 const Call = () => {
   const [isSupported, setIsSupported] = useState(false)
@@ -65,14 +64,12 @@ const Call = () => {
     webGL.renderer.xr.setSession(session)
     session.addEventListener('end', () => location.reload())
 
-    // const painter = TubePainter()
-    // painter.setSize(0.2)
-    // webGL.scene.add(painter.mesh)
-
-    // const cursor = new THREE.Vector3()
+    const cursor = new THREE.Vector3()
 
     const controller = webGL.renderer.xr.getController(0)
     controller.userData.inputType = null
+    controller.userData.skipFrames = 2
+
     controller.addEventListener('selectstart', () => {
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
       const intersects = webGL.raycaster.intersectObjects(webGL.scene.children)
@@ -80,37 +77,39 @@ const Call = () => {
         onClickButton(controller, intersects[0].object, audioMedia)
         return
       }
+
+      const painter = TubePainter()
+      painter.setSize(0.2)
+      webGL.scene.add(painter.mesh)
+      controller.userData.painter = painter
       controller.userData.isSelecting = true
     })
 
     controller.addEventListener('selectend', () => {
       controller.userData.isSelecting = false
+      controller.userData.skipFrames = 2
+
+      const painter = controller.userData.painter
+      const data = painter.mesh.toJSON()
+      sendMeshHandler(socket, {
+        vertices: JSON.stringify(data.geometries[0].data.attributes.position.array),
+        color: data.materials[0].color
+      })
     })
 
     const handleController = () => {
       if(!controller.userData.isSelecting) return
 
-      // cursor.set(controller.position.x, controller.position.y, controller.position.z).applyMatrix4( controller.matrixWorld )
-      // painter.moveTo(cursor)
-      // painter.lineTo(cursor)
-      // painter.update()
+      cursor.set(controller.position.x, controller.position.y, controller.position.z).applyMatrix4( controller.matrixWorld )
+      const painter = controller.userData.painter
+      if(controller.userData.skipFrames >= 0) {
+        controller.userData.skipFrames--
+        painter.moveTo(cursor)
+        return
+      }
 
-      if(controller.userData.inputType !== 'square') return
-
-      const geometry = new THREE.BoxGeometry(0.01, 0.01, 0.01)
-      const material = new THREE.MeshBasicMaterial({color: new Color('#ffffff')})
-      const mesh = new THREE.Mesh(geometry, material)
-      mesh.position.set(
-        controller.position.x,
-        controller.position.y,
-        controller.position.z
-      )
-      webGL.scene.add(mesh)
-      sendMeshHandler(socket, {
-        json: mesh.toJSON(),
-        position: controller.position
-      })
-      controller.userData.isSelecting = false
+      painter.lineTo(cursor)
+      painter.update()
     }
 
     webGL.renderer.setAnimationLoop(() => {

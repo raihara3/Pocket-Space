@@ -6,32 +6,23 @@ import {
 	Matrix4,
 	Mesh,
 	MeshStandardMaterial,
-	Vector3
+	Vector3,
+	MeshBasicMaterial
 } from 'three';
 
 function TubePainter() {
 
-	const BUFFER_SIZE = 1000000 * 3;
+	// const BUFFER_SIZE = 1000000 * 3;
+	const BUFFER_SIZE = 40000;
 
 	const positions = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
 	positions.usage = DynamicDrawUsage;
 
-	const normals = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
-	normals.usage = DynamicDrawUsage;
-
-	const colors = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
-	colors.usage = DynamicDrawUsage;
-
 	const geometry = new BufferGeometry();
 	geometry.setAttribute( 'position', positions );
-	geometry.setAttribute( 'normal', normals );
-	geometry.setAttribute( 'color', colors );
 	geometry.drawRange.count = 0;
 
-	const material = new MeshStandardMaterial( {
-		vertexColors: true
-	} );
-
+	const material = new MeshBasicMaterial({color:0x3366cc})
 	const mesh = new Mesh( geometry, material );
 	mesh.frustumCulled = false;
 
@@ -94,31 +85,6 @@ function TubePainter() {
 			vector3.toArray( positions.array, ( count + 4 ) * 3 );
 			vector4.toArray( positions.array, ( count + 5 ) * 3 );
 
-			// normals
-
-			vector1.copy( vertex1 ).applyMatrix4( matrix2 ).normalize();
-			vector2.copy( vertex2 ).applyMatrix4( matrix2 ).normalize();
-			vector3.copy( vertex2 ).applyMatrix4( matrix1 ).normalize();
-			vector4.copy( vertex1 ).applyMatrix4( matrix1 ).normalize();
-
-			vector1.toArray( normals.array, ( count + 0 ) * 3 );
-			vector2.toArray( normals.array, ( count + 1 ) * 3 );
-			vector4.toArray( normals.array, ( count + 2 ) * 3 );
-
-			vector2.toArray( normals.array, ( count + 3 ) * 3 );
-			vector3.toArray( normals.array, ( count + 4 ) * 3 );
-			vector4.toArray( normals.array, ( count + 5 ) * 3 );
-
-			// colors
-
-			color.toArray( colors.array, ( count + 0 ) * 3 );
-			color.toArray( colors.array, ( count + 1 ) * 3 );
-			color.toArray( colors.array, ( count + 2 ) * 3 );
-
-			color.toArray( colors.array, ( count + 3 ) * 3 );
-			color.toArray( colors.array, ( count + 4 ) * 3 );
-			color.toArray( colors.array, ( count + 5 ) * 3 );
-
 			count += 6;
 
 		}
@@ -179,14 +145,6 @@ function TubePainter() {
 		positions.updateRange.offset = start * 3;
 		positions.updateRange.count = ( end - start ) * 3;
 		positions.needsUpdate = true;
-
-		normals.updateRange.offset = start * 3;
-		normals.updateRange.count = ( end - start ) * 3;
-		normals.needsUpdate = true;
-
-		colors.updateRange.offset = start * 3;
-		colors.updateRange.count = ( end - start ) * 3;
-		colors.needsUpdate = true;
 
 		count = geometry.drawRange.count;
 
