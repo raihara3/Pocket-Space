@@ -13,7 +13,7 @@ import Footer from '../../components/layout/Footer'
 import Card from '../../components/molecules/Card'
 import InputField from '../../components/atoms/InputField'
 import AudioMedia from '../../src/AudioMedia'
-import { TubePainter } from "../../src/TubePainter"
+import Painter from '../../src/Painter'
 
 const Call = () => {
   const [isSupported, setIsSupported] = useState(false)
@@ -78,8 +78,8 @@ const Call = () => {
         return
       }
 
-      const painter = TubePainter()
-      painter.setSize(0.2)
+      const painter = new Painter('#ffffff')
+      painter.setSize = 0.2
       webGL.scene.add(painter.mesh)
       controller.userData.painter = painter
       controller.userData.isSelecting = true
