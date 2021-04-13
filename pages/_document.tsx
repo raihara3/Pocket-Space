@@ -36,10 +36,6 @@ class MyDocument extends Document {
           <title>AR Meet</title>
           <link rel='icon' href='/favicon.ico' type='image/x-icon' />
           <meta name='description' content='This service allows you to play with AR while making calls.' />
-          <script src='https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js'></script>
-          <script>
-            window.polyfill = new WebXRPolyfill();
-          </script>
         </Head>
         <body>
           <Main />
