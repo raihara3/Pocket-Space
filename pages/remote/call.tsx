@@ -128,8 +128,14 @@ const Call = () => {
         return
       }
       setExpire(json.data.remainingTime)
+
+      if(!navigator['xr']) {
+        setIsSupported(false)
+        return
+      }
+      const isSessionSupported = await navigator['xr'].isSessionSupported('immersive-ar')
+      setIsSupported(isSessionSupported)
     })()
-    setIsSupported('xr' in navigator)
   }, [])
 
   useEffect(() => {
