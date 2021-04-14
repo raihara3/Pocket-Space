@@ -14,7 +14,7 @@ COPY public/ public/
 COPY src/ src/
 COPY styles/ styles/
 COPY threeComponents/ threeComponents/
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/
 
 RUN npm run build
 
