@@ -72,7 +72,7 @@ const Call = () => {
 
     controller.addEventListener('selectstart', () => {
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
-      const intersects = webGL.raycaster.intersectObjects(webGL.scene.children)
+      const intersects = webGL.raycaster.intersectObjects(webGL.scene.children, true)
       if(intersects.length && intersects[0].object.name) {
         onClickButton(controller, intersects[0].object, audioMedia)
         return
