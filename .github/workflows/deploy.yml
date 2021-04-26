@@ -34,15 +34,15 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: communication-webar
+      IMAGE_NAME: webar-oekaki-chat
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
           path: /home/runner/.cache/docker-build
-          key: ${{ runner.os }}-communication-webar-docker-${{ hashFiles('Dockerfile') }}-${{ hashFiles('package.json') }}-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-webar-oekaki-chat-docker-${{ hashFiles('Dockerfile') }}-${{ hashFiles('package.json') }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-communication-webar-docker-
+            ${{ runner.os }}-webar-oekaki-chat-docker-
       - uses: crazy-max/ghaction-docker-buildx@v1
         with:
           buildx-version: latest
@@ -71,8 +71,8 @@ jobs:
           script: |
             cd ${{ secrets.PROJECT_PATH }}
             git pull origin master
-            docker pull ghcr.io/raihara3/communication-webar:master
-            docker stop communication-webar_nextjs_1
+            docker pull ghcr.io/raihara3/webar-oekaki-chat:master
+            docker stop webar-oekaki-chat_nextjs_1
             docker-compose up -d nextjs
             docker image prune -f
 
@@ -89,7 +89,7 @@ jobs:
           author: ${{ github.actor }}
           branch: ${{ github.ref }}
           outputDirectory: /tmp/artifacts
-          urls: 'https://raihara3.fun,https://raihara3.fun/remote/call'
+          urls: 'https://armeet.raihara3.fun,https://armeet.raihara3.fun/remote/call'
           sha: ${{ github.sha }}
           slackWebhookUrl: ${{ secrets.LIGHTHOUSE_CHECK_WEBHOOK_URL }}
       - name: Upload artifacts
