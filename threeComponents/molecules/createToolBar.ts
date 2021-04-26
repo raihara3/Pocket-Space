@@ -13,7 +13,7 @@ const colorPallet = {
   white: '#f2f2f2'
 }
 
-export const onClickButton = (controller: THREE.Group, button: Object3D, audioMedia: AudioMedia) => {
+export const onClickButton = (scene: THREE.Scene, controller: THREE.Group, button: Object3D, audioMedia: AudioMedia) => {
   switch(button.userData.type) {
     case 'mic': {
       const enabled = audioMedia.switching()
@@ -25,11 +25,14 @@ export const onClickButton = (controller: THREE.Group, button: Object3D, audioMe
       break
     }
     case 'color': {
+      const disablementButton = scene.getObjectByName(controller.userData.colorName)
+      disablementButton && onPushIn(false, disablementButton)
+
       const clickedButtonIndex = buttonList.findIndex(info => info.name === button.name)
-      const isSelected = buttonList[clickedButtonIndex].isSelected
-      onPushIn(!isSelected, button)
-      buttonList[clickedButtonIndex].isSelected = !isSelected
-      controller.userData.color = colorPallet[button.name]
+      onPushIn(true, button)
+      buttonList[clickedButtonIndex].isSelected = true
+      controller.userData.colorName = button.name
+      controller.userData.colorCode = colorPallet[button.name]
       break
     }
   }
