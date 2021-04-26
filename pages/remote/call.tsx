@@ -67,20 +67,15 @@ const Call = () => {
     const cursor = new THREE.Vector3()
 
     const controller = webGL.renderer.xr.getController(0)
+    controller.userData.color = '#ffffff'
     controller.userData.inputType = null
     controller.userData.skipFrames = 2
 
     controller.addEventListener('selectstart', () => {
-      webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
-      const intersects = webGL.raycaster.intersectObjects(webGL.scene.children, true)
-      if(intersects.length && intersects[0].object.name) {
-        onClickButton(controller, intersects[0].object, audioMedia)
-        return
-      }
-
-      const painter = new Painter('#ffffff')
+      const painter = new Painter(controller.userData.color)
       painter.setSize = 0.2
       webGL.scene.add(painter.mesh)
+
       controller.userData.painter = painter
       controller.userData.isSelecting = true
     })
@@ -88,6 +83,13 @@ const Call = () => {
     controller.addEventListener('selectend', () => {
       controller.userData.isSelecting = false
       controller.userData.skipFrames = 2
+
+      webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
+      const intersects = webGL.raycaster.intersectObjects(webGL.scene.children, true)
+      if(intersects.length && intersects[0].object.name) {
+        onClickButton(controller, intersects[0].object, audioMedia)
+        return
+      }
 
       const painter = controller.userData.painter
       const data = painter.mesh.toJSON()

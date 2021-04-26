@@ -4,14 +4,14 @@ import { Color } from 'three'
 class Button {
   name: string
   color: string
-  imgSrc: string
+  imgSrc?: string
   size: {
     width: number
     height: number
     depth: number
   }
 
-  constructor(name: string, color: string, imgSrc: string, size: any) {
+  constructor(name: string, color: string, size: any, imgSrc?: string) {
     this.name = name
     this.color = color
     this.imgSrc = imgSrc
@@ -26,7 +26,7 @@ class Button {
       colorTexture,
       colorTexture,
       colorTexture,
-      new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(this.imgSrc)}),
+      this.imgSrc ? new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(this.imgSrc)}) : colorTexture,
       colorTexture,
     ]
     const mesh = new THREE.Mesh(geometry, material)
