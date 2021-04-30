@@ -13,8 +13,12 @@ const colorPallet = {
   white: '#f2f2f2'
 }
 
-export const onClickButton = (scene: THREE.Scene, controller: THREE.Group, button: Object3D, audioMedia: AudioMedia) => {
+export const onClickButton = (scene: THREE.Scene, controller: THREE.Group, button: Object3D, audioMedia: AudioMedia, deleteAllMeshHandler) => {
   switch(button.userData.type) {
+    case 'trash': {
+      deleteAllMeshHandler()
+      break
+    }
     case 'mic': {
       const enabled = audioMedia.switching()
       onPushIn(enabled, button)
@@ -98,6 +102,13 @@ const buttonList: Array<ButtonInfo> = [
     type: 'color',
     color: colorPallet.white,
     isSelected: true
+  },
+  {
+    name: 'trash',
+    type: 'trash',
+    color: '#7d7d7d',
+    imgSrc: '/textures/trash.png',
+    isSelected: false
   },
   {
     name: 'mic',
