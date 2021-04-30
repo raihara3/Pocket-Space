@@ -60,7 +60,6 @@ const Call = () => {
     })
     const context: any = webGL.context
     await context.makeXRCompatible()
-    webGL.renderer.xr.setReferenceSpaceType('local')
     webGL.renderer.xr.setSession(session)
     session.addEventListener('end', () => location.reload())
 
@@ -70,13 +69,12 @@ const Call = () => {
     controller.userData.colorName = 'white'
     controller.userData.colorCode = '#ffffff'
     controller.userData.skipFrames = 2
+    controller.userData.isSelecting = false
 
     controller.addEventListener('selectstart', () => {
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
       const intersects = webGL.raycaster.intersectObjects(webGL.scene.children, true)
-      if(intersects.length && intersects[0].object.name) {
-        return
-      }
+      if(intersects.length && intersects[0].object.name) return
 
       const painter = new Painter(controller.userData.colorCode)
       painter.setSize = 0.2
