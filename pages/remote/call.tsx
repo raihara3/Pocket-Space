@@ -53,7 +53,7 @@ const Call = () => {
     const canvas = document.getElementById('webAR') as HTMLCanvasElement
     const webGL = new WebGL(canvas)
     createToolBar(webGL.scene)
-    receiveMessagingHandler(socket, webGL.scene, webGL.renderer, audioMedia, (list) => setMemberList(list))
+    receiveMessagingHandler(socket, webGL, audioMedia, (list) => setMemberList(list))
 
     const session = await navigator['xr'].requestSession('immersive-ar', {
       requiredFeatures: ['local', 'hit-test']
@@ -63,8 +63,6 @@ const Call = () => {
     webGL.renderer.xr.setSession(session)
     session.addEventListener('end', () => location.reload())
 
-    const cursor = new THREE.Vector3()
-
     const controller = webGL.renderer.xr.getController(0)
     controller.userData.colorName = 'white'
     controller.userData.colorCode = '#ffffff'
@@ -73,8 +71,9 @@ const Call = () => {
 
     controller.addEventListener('selectstart', () => {
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
-      const intersects = webGL.raycaster.intersectObjects(webGL.scene.children, true)
-      if(intersects.length && intersects[0].object.name) return
+      const intersectButtons = webGL.raycaster.intersectObjects(webGL.scene.children, true)
+        .filter(mesh => mesh.object.name)
+      if(intersectButtons.length) return
 
       const painter = new Painter(controller.userData.colorCode)
       painter.setSize = 0.2
@@ -83,14 +82,16 @@ const Call = () => {
       controller.userData.isSelecting = true
     })
 
+    const cursor = new THREE.Vector3()
     controller.addEventListener('selectend', () => {
       controller.userData.isSelecting = false
       controller.userData.skipFrames = 2
 
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
-      const intersects = webGL.raycaster.intersectObjects(webGL.scene.children, true)
-      if(intersects.length && intersects[0].object.name) {
-        onClickButton(webGL.scene, controller, intersects[0].object, audioMedia, () => { deleteAllMeshHandler(socket) })
+      const intersectButtons = webGL.raycaster.intersectObjects(webGL.scene.children, true)
+        .filter(mesh => mesh.object.name)
+      if(intersectButtons.length) {
+        onClickButton(webGL.scene, controller, intersectButtons[0].object, audioMedia, () => { deleteAllMeshHandler(socket) })
         return
       }
 

@@ -1,7 +1,13 @@
 import { parssePainter, Painter } from '../../threeComponents/Mesh'
+import WebGL from '../../src/WebGL'
 import AudioMedia from '../AudioMedia'
 
-export const receiveMessagingHandler = async(socket: SocketIOClient.Socket, scene: THREE.Scene, renderer:THREE.WebGLRenderer, audioMedia: AudioMedia, setMemberList: (list: any) => void) => {
+export const receiveMessagingHandler = async(
+    socket: SocketIOClient.Socket,
+    webGL: WebGL,
+    audioMedia: AudioMedia,
+    setMemberList: (list: any) => void
+  ) => {
   const peerList = {}
 
   socket.on('addUser', async({ newEntryID, userName, memberList }) => {
@@ -37,20 +43,20 @@ export const receiveMessagingHandler = async(socket: SocketIOClient.Socket, scen
 
   socket.on('getMesh', (data) => {
     try {
-      parssePainter(scene, data)
+      parssePainter(webGL.scene, data)
     } catch (e) {
       console.error('Faild to synchronize scene', e)
     }
   })
 
   socket.on('deleteAllMesh', () => {
-    const target = scene.children.filter(mesh => mesh.type === 'Mesh')
+    const target = webGL.scene.children.filter(mesh => mesh.type === 'Mesh')
     target.forEach(mesh => {
       mesh.geometry.dispose()
       mesh.material.dispose()
-      scene.remove(mesh)
+      webGL.scene.remove(mesh)
     })
-    renderer.renderLists.dispose()
+    webGL.renderer.renderLists.dispose()
   })
 
   socket.on('getOffer', async ({senderID, sdp}) => {
