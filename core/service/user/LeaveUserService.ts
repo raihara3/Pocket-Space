@@ -24,9 +24,6 @@ class LeaveUserService {
       userID: userID,
       memberList: memberList
     })
-    if(memberList.length === 0) {
-      this.meshRepository.delete(roomID)
-    }
   }
 }
 
