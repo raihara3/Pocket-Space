@@ -6,8 +6,8 @@ import { Button, Link } from '@material-ui/core'
 import { Alert } from '@material-ui/lab'
 import Video from '../../components/atoms/Video'
 import WebGL from '../../src/WebGL'
-import { createToolBar, onClickButton } from '../../threeComponents/molecules/createToolBar'
-import { receiveMessagingHandler, sendMeshHandler, deleteAllMeshHandler } from '../../src/emitter/Messaging'
+import { createToolBar } from '../../src/createToolBar'
+import { receiveMessagingHandler, sendMeshHandler } from '../../src/emitter/Messaging'
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
 import Card from '../../components/molecules/Card'
@@ -52,7 +52,6 @@ const Call = () => {
     const socket = await io()
     const canvas = document.getElementById('webAR') as HTMLCanvasElement
     const webGL = new WebGL(canvas)
-    createToolBar(webGL.scene)
     receiveMessagingHandler(socket, webGL, audioMedia, (list) => setMemberList(list))
 
     const session = await navigator['xr'].requestSession('immersive-ar', {
@@ -68,6 +67,8 @@ const Call = () => {
     controller.userData.colorCode = '#ffffff'
     controller.userData.skipFrames = 2
     controller.userData.isSelecting = false
+
+    createToolBar(webGL.scene, socket, audioMedia, controller)
 
     controller.addEventListener('selectstart', () => {
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
@@ -91,7 +92,7 @@ const Call = () => {
       const intersectButtons = webGL.raycaster.intersectObjects(webGL.scene.children, true)
         .filter(mesh => mesh.object.name)
       if(intersectButtons.length) {
-        onClickButton(webGL.scene, controller, intersectButtons[0].object, audioMedia, () => { deleteAllMeshHandler(socket) })
+        intersectButtons[0].object.dispatchEvent({type: 'click'})
         return
       }
 

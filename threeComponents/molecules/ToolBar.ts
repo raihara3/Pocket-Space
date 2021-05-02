@@ -12,7 +12,8 @@ interface ButtonInfo {
   type: string
   color: string
   imgSrc?: string
-  isSelected: boolean
+  isDefaultSelected: boolean
+  onClick: () => void
 }
 
 interface ButtonSize {
@@ -52,16 +53,17 @@ class ToolBar {
 
     const ORIGIN_MARGIN = 0.002
     const buttonGroup = new Group()
-    this.buttonList.forEach(({ name, type, color, imgSrc, isSelected }, index) => {
+    this.buttonList.forEach(({ name, type, color, imgSrc, isDefaultSelected, onClick }, index) => {
       const margin = index * ORIGIN_MARGIN
       const button = new Button(name, color, this.buttonSize, imgSrc).execute()
       button.userData.type = type
+      button.addEventListener('click', () => onClick())
       button.position.set(
         (index * this.buttonSize.width) + margin,
         0,
-        isSelected ? 0 : this.buttonSize.depth / 2
+        isDefaultSelected ? 0 : this.buttonSize.depth / 2
       )
-      if(isSelected) {
+      if(isDefaultSelected) {
         button.scale.z = 0.5
       }
       buttonGroup.add(button)
