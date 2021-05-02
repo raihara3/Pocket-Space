@@ -31,7 +31,7 @@ class ToolBar {
   }
 
   execute() {
-    // if button.length === 0
+    if(this.buttonList.length === 0) return null
 
     const BUTTON_MARGIN = 0.002
     const PADDING_BESIDE = 0.01
@@ -65,6 +65,18 @@ class ToolBar {
       }
       buttonGroup.add(button)
     })
+
+    if(this.buttonList.length > 1) {
+      // centering
+      buttonGroup.position.set(
+        (this.buttonSize.width / 2) - ((
+          (this.buttonList.length * this.buttonSize.width)
+          + ((this.buttonList.length - 1) * ORIGIN_MARGIN)
+        ) / 2),
+        0,
+        0
+      )
+    }
 
     return new Group().add(panel, buttonGroup)
   }
