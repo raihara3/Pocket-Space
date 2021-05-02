@@ -52,9 +52,10 @@ class ToolBar {
 
     const ORIGIN_MARGIN = 0.002
     const buttonGroup = new Group()
-    this.buttonList.forEach(({ name, color, imgSrc, isSelected }, index) => {
+    this.buttonList.forEach(({ name, type, color, imgSrc, isSelected }, index) => {
       const margin = index * ORIGIN_MARGIN
       const button = new Button(name, color, this.buttonSize, imgSrc).execute()
+      button.userData.type = type
       button.position.set(
         (index * this.buttonSize.width) + margin,
         0,
