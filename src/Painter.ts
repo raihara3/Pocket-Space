@@ -15,7 +15,7 @@ class Cursor {
   position: BufferAttribute
   color: string
 
-  constructor(color: string) {
+  constructor(color?: string) {
     const bufferSize = 40000
 
     this.position = new BufferAttribute(new Float32Array(bufferSize), 3)
@@ -23,12 +23,11 @@ class Cursor {
     this.geometry = new BufferGeometry()
     this.geometry.setAttribute('position', this.position)
     this.geometry.drawRange.count = 0
-    const material = new MeshBasicMaterial({color: new Color(color)})
+    this.color = color ?? '#ffffff'
+    const material = new MeshBasicMaterial({color: new Color(this.color)})
 
     this.mesh = new Mesh(this.geometry, material)
     this.mesh.frustumCulled = false
-
-    this.color = color
   }
 
   get getCursor() {
@@ -61,7 +60,7 @@ class Painter extends Cursor {
   count: number
   size: number
 
-  constructor(color: string) {
+  constructor(color?: string) {
     super(color)
 
     this.target = new Vector3()
@@ -71,7 +70,7 @@ class Painter extends Cursor {
     this.matrix2 = new Matrix4()
 
     this.count = 0
-    this.size = 0.5
+    this.size = 0.2
   }
 
   set setSize(size: number) {

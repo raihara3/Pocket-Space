@@ -77,7 +77,6 @@ const Call = () => {
       if(intersectButtons.length) return
 
       const painter = new Painter(controller.userData.colorCode)
-      painter.setSize = 0.2
       webGL.scene.add(painter.mesh)
       controller.userData.painter = painter
       controller.userData.isSelecting = true
