@@ -1,0 +1,8 @@
+{
+  "**/*.ts?(x)": [
+    "eslint --fix"
+  ],
+  "**/__tests__/**.ts?(x)": [
+    "yarn test"
+  ]
+}
