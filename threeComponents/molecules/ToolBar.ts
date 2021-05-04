@@ -55,6 +55,7 @@ class ToolBar {
     this.buttonList.forEach(({ name, color, imgSrc, isDefaultSelected, onClick }, index) => {
       const margin = index * ORIGIN_MARGIN
       const button = new Button(name, color, this.buttonSize, imgSrc).execute()
+      button.userData.colorCode = color
       button.addEventListener('click', () => onClick())
       button.position.set(
         (index * this.buttonSize.width) + margin,

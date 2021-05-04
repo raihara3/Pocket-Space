@@ -4,16 +4,6 @@ import AudioMedia from './AudioMedia'
 import ToolBar from '../threeComponents/molecules/ToolBar'
 import { deleteAllMeshHandler } from './emitter/Messaging'
 
-const colorPallet = {
-  red: '#c31700',
-  yellow: '#f5ec00',
-  green: '#009e19',
-  blue: '#00789e',
-  pink: '#c000b9',
-  black: '#141414',
-  white: '#f2f2f2'
-}
-
 const buttonSize = {
   width: 0.01,
   height: 0.01,
@@ -27,7 +17,7 @@ const onColorChange = (scene: THREE.Scene, controller: THREE.Group, name: string
 
   onPushIn(false, disabledmentButton)
   controller.userData.colorName = clickedButton.name
-  controller.userData.colorCode = colorPallet[clickedButton.name]
+  controller.userData.colorCode = clickedButton.userData.colorCode
   onPushIn(true, clickedButton)
 }
 
@@ -55,7 +45,7 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
   const buttonList: Array<ButtonInfo> = [
     {
       name: 'red',
-      color: colorPallet.red,
+      color: '#c31700',
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'red')
@@ -63,7 +53,7 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'yellow',
-      color: colorPallet.yellow,
+      color: '#f5ec00',
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'yellow')
@@ -71,7 +61,7 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'green',
-      color: colorPallet.green,
+      color: '#009e19',
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'green')
@@ -79,7 +69,7 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'blue',
-      color: colorPallet.blue,
+      color: '#00789e',
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'blue')
@@ -87,7 +77,7 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'pink',
-      color: colorPallet.pink,
+      color: '#c000b9',
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'pink')
@@ -95,7 +85,7 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'black',
-      color: colorPallet.black,
+      color: '#141414',
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'black')
@@ -103,7 +93,7 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'white',
-      color: colorPallet.white,
+      color: '#f2f2f2',
       isDefaultSelected: true,
       onClick: () => {
         onColorChange(scene, controller, 'white')
