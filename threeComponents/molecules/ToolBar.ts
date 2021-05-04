@@ -9,7 +9,6 @@ import Button from '../atoms/Button'
 
 interface ButtonInfo {
   name: string
-  type: string
   color: string
   imgSrc?: string
   isDefaultSelected: boolean
@@ -53,10 +52,9 @@ class ToolBar {
 
     const ORIGIN_MARGIN = 0.002
     const buttonGroup = new Group()
-    this.buttonList.forEach(({ name, type, color, imgSrc, isDefaultSelected, onClick }, index) => {
+    this.buttonList.forEach(({ name, color, imgSrc, isDefaultSelected, onClick }, index) => {
       const margin = index * ORIGIN_MARGIN
       const button = new Button(name, color, this.buttonSize, imgSrc).execute()
-      button.userData.type = type
       button.addEventListener('click', () => onClick())
       button.position.set(
         (index * this.buttonSize.width) + margin,

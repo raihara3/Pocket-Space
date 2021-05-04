@@ -45,7 +45,6 @@ const onPushIn = (hasPushIn: boolean, mesh: Object3D | undefined) => {
 
 interface ButtonInfo {
   name: string
-  type: string
   color: string
   imgSrc?: string
   isDefaultSelected: boolean
@@ -56,7 +55,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
   const buttonList: Array<ButtonInfo> = [
     {
       name: 'red',
-      type: 'color',
       color: colorPallet.red,
       isDefaultSelected: false,
       onClick: () => {
@@ -65,7 +63,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'yellow',
-      type: 'color',
       color: colorPallet.yellow,
       isDefaultSelected: false,
       onClick: () => {
@@ -74,7 +71,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'green',
-      type: 'color',
       color: colorPallet.green,
       isDefaultSelected: false,
       onClick: () => {
@@ -83,7 +79,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'blue',
-      type: 'color',
       color: colorPallet.blue,
       isDefaultSelected: false,
       onClick: () => {
@@ -92,7 +87,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'pink',
-      type: 'color',
       color: colorPallet.pink,
       isDefaultSelected: false,
       onClick: () => {
@@ -101,7 +95,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'black',
-      type: 'color',
       color: colorPallet.black,
       isDefaultSelected: false,
       onClick: () => {
@@ -110,7 +103,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'white',
-      type: 'color',
       color: colorPallet.white,
       isDefaultSelected: true,
       onClick: () => {
@@ -119,7 +111,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'trash',
-      type: 'trash',
       color: '#7d7d7d',
       imgSrc: '/textures/trash.png',
       isDefaultSelected: false,
@@ -129,7 +120,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'mic',
-      type: 'mic',
       color: '#7d7d7d',
       imgSrc: '/textures/mic.png',
       isDefaultSelected: true,
@@ -140,7 +130,6 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
     {
       name: 'exit',
-      type: 'exit',
       color: '#7d7d7d',
       imgSrc: '/textures/exit.png',
       isDefaultSelected: false,
