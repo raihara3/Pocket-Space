@@ -1,5 +1,10 @@
-import * as THREE from 'three'
-import { Color } from 'three'
+import {
+  BoxGeometry,
+  MeshBasicMaterial,
+  Color,
+  TextureLoader,
+  Mesh
+} from 'three'
 
 class Button {
   name: string
@@ -19,17 +24,17 @@ class Button {
   }
 
   execute() {
-    const geometry = new THREE.BoxGeometry(this.size.width, this.size.height, this.size.depth)
-    const colorTexture = new THREE.MeshBasicMaterial({color: new Color(this.color)})
+    const geometry = new BoxGeometry(this.size.width, this.size.height, this.size.depth)
+    const colorTexture = new MeshBasicMaterial({color: new Color(this.color)})
     const material = [
       colorTexture,
       colorTexture,
       colorTexture,
       colorTexture,
-      this.imgSrc ? new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(this.imgSrc)}) : colorTexture,
+      this.imgSrc ? new MeshBasicMaterial({map: new TextureLoader().load(this.imgSrc)}) : colorTexture,
       colorTexture,
     ]
-    const mesh = new THREE.Mesh(geometry, material)
+    const mesh = new Mesh(geometry, material)
     mesh.name = this.name
     return mesh
   }

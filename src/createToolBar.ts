@@ -1,18 +1,16 @@
-import * as THREE from 'three'
-import { Object3D } from 'three'
+import {
+  Scene,
+  Group,
+  BoxGeometry,
+  Mesh
+} from 'three'
 import AudioMedia from './AudioMedia'
 import ToolBar from '../threeComponents/molecules/ToolBar'
 import { deleteAllMeshHandler } from './emitter/Messaging'
 
-const buttonSize = {
-  width: 0.01,
-  height: 0.01,
-  depth: 0.005
-}
-
-const onColorChange = (scene: THREE.Scene, controller: THREE.Group, name: string) => {
-  const disabledmentButton = scene.getObjectByName(controller.userData.colorName)
-  const clickedButton = scene.getObjectByName(name)
+const onColorChange = (scene: Scene, controller: Group, name: string) => {
+  const disabledmentButton = scene.getObjectByName(controller.userData.colorName) as Mesh | undefined
+  const clickedButton = scene.getObjectByName(name) as Mesh | undefined
   if(disabledmentButton === undefined || clickedButton === undefined) return
 
   onPushIn(false, disabledmentButton)
@@ -21,15 +19,14 @@ const onColorChange = (scene: THREE.Scene, controller: THREE.Group, name: string
   onPushIn(true, clickedButton)
 }
 
-const onPushIn = (hasPushIn: boolean, mesh: Object3D | undefined) => {
-  if(mesh === undefined) return
-
+const onPushIn = (hasPushIn: boolean, mesh: Mesh) => {
   if(hasPushIn) {
     mesh.scale.z = 0.5
     mesh.position.z = 0
   }else {
     mesh.scale.z = 1
-    mesh.position.z = buttonSize.depth / 2
+    const geometry = mesh.geometry as BoxGeometry
+    mesh.position.z = (geometry.parameters.depth) / 2
   }
 }
 
@@ -41,7 +38,12 @@ interface ButtonInfo {
   onClick: () => void
 }
 
-export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket, audioMedia: AudioMedia, controller: THREE.Group) => {
+export const createToolBar = (
+    scene: Scene,
+    socket: SocketIOClient.Socket,
+    audioMedia: AudioMedia,
+    controller: Group
+  ) => {
   const buttonList: Array<ButtonInfo> = [
     {
       name: 'red',
@@ -115,7 +117,9 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
       isDefaultSelected: true,
       onClick: () => {
         const enabled = audioMedia.switching()
-        onPushIn(enabled, scene.getObjectByName('mic'))
+        const mic = scene.getObjectByName('mic') as Mesh | undefined
+        if(mic === undefined) return
+        onPushIn(enabled, mic)
       }
     },
     {
@@ -129,7 +133,11 @@ export const createToolBar = (scene: THREE.Scene, socket: SocketIOClient.Socket,
     },
   ]
 
-  const toolBar = new ToolBar(buttonList, buttonSize).execute()
+  const toolBar = new ToolBar(buttonList, {
+    width: 0.01,
+    height: 0.01,
+    depth: 0.005
+  }).execute()
   if(toolBar === null) return
 
   toolBar.position.set(0, -0.1, -0.1)
