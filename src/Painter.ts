@@ -11,8 +11,8 @@ import {
 
 class Cursor {
   public mesh: Mesh
-  private geometry: BufferGeometry
-  private position: BufferAttribute
+  public geometry: BufferGeometry
+  public position: BufferAttribute
   private color: string
 
   constructor(color?: string) {
