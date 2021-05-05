@@ -1,5 +1,5 @@
 class AudioMedia {
-  stream: MediaStream | null
+  public stream: MediaStream | null
 
   constructor() {
     this.stream = null

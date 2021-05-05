@@ -1,12 +1,12 @@
 import * as THREE from 'three'
 
 class WebGL {
-  context: WebGLRenderingContext
-  scene: THREE.Scene
-  camera: THREE.PerspectiveCamera
-  raycaster: THREE.Raycaster
-  mouse: THREE.Vector2
-  renderer: THREE.WebGLRenderer
+  public context: WebGLRenderingContext
+  public scene: THREE.Scene
+  public camera: THREE.PerspectiveCamera
+  public raycaster: THREE.Raycaster
+  public mouse: THREE.Vector2
+  public renderer: THREE.WebGLRenderer
 
   constructor(canvas) {
     this.context = canvas.getContext('webgl')

@@ -3,8 +3,8 @@ export interface Sender {
 }
 
 class UserMessagingRepository {
-  sender: Sender
-  broadcaster: Sender
+  private sender: Sender
+  private broadcaster: Sender
 
   constructor(sender: Sender, broadcaster: Sender) {
     this.sender = sender

@@ -2,8 +2,8 @@ import UserMessagingRepository from '../../repository/user/UserMessagingReposito
 import MeshRepository from '../../repository/mesh/MeshRepository'
 
 class DeleteAllMeshService {
-  meshRepository: MeshRepository
-  userMessagingRepository: UserMessagingRepository
+  private meshRepository: MeshRepository
+  private userMessagingRepository: UserMessagingRepository
 
   constructor(meshRepository, userMessagingRepository) {
     this.meshRepository = meshRepository

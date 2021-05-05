@@ -1,7 +1,7 @@
 import RoomRepository from '../../repository/room/RoomRepository'
 
 class GetRoomService {
-  roomRepository: RoomRepository
+  private roomRepository: RoomRepository
 
   constructor(roomRepository) {
     this.roomRepository = roomRepository

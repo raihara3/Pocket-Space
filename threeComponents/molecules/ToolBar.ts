@@ -22,8 +22,8 @@ interface ButtonSize {
 }
 
 class ToolBar {
-  buttonList: Array<ButtonInfo>
-  buttonSize: ButtonSize
+  private buttonList: Array<ButtonInfo>
+  private buttonSize: ButtonSize
 
   constructor(buttonList: Array<ButtonInfo>, buttonSize: ButtonSize) {
     this.buttonList = buttonList

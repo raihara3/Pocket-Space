@@ -1,18 +1,15 @@
 import MemberRepository from '../../repository/user/MemberRepository'
-import MeshRepository from '../../repository/mesh/MeshRepository'
 import UserMessagingRepository from '../../repository/user/UserMessagingRepository'
 import UserNameRepository from '../../repository/user/UserNameRepository'
 
 class LeaveUserService {
-  memberRepository: MemberRepository
-  userNameRepository: UserNameRepository
-  meshRepository: MeshRepository
-  userMessagingRepository: UserMessagingRepository
+  private memberRepository: MemberRepository
+  private userNameRepository: UserNameRepository
+  private userMessagingRepository: UserMessagingRepository
 
-  constructor(memberRepository, userNameRepository, meshRepository, userMessagingRepository) {
+  constructor(memberRepository, userNameRepository, userMessagingRepository) {
     this.memberRepository = memberRepository
     this.userNameRepository = userNameRepository
-    this.meshRepository = meshRepository
     this.userMessagingRepository = userMessagingRepository
   }
 

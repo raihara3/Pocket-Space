@@ -7,10 +7,10 @@ import {
 } from 'three'
 
 class Button {
-  name: string
-  color: string
-  imgSrc?: string
-  size: {
+  private name: string
+  private color: string
+  private imgSrc?: string
+  private size: {
     width: number
     height: number
     depth: number

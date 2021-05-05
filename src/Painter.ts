@@ -10,10 +10,10 @@ import {
 } from 'three'
 
 class Cursor {
-  mesh: Mesh
-  geometry: BufferGeometry
-  position: BufferAttribute
-  color: string
+  public mesh: Mesh
+  private geometry: BufferGeometry
+  private position: BufferAttribute
+  private color: string
 
   constructor(color?: string) {
     const bufferSize = 40000
@@ -53,12 +53,12 @@ const getPoints = (size: number) => {
 }
 
 class Painter extends Cursor {
-  target: Vector3
-  eye: Vector3
-  matrix1: Matrix4
-  matrix2: Matrix4
-  count: number
-  size: number
+  private target: Vector3
+  private eye: Vector3
+  private matrix1: Matrix4
+  private matrix2: Matrix4
+  private count: number
+  private size: number
 
   constructor(color?: string) {
     super(color)

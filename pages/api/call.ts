@@ -99,7 +99,6 @@ const callHandler = async(req, res) => {
       new LeaveUserService(
         memberRepository,
         userNameRepository,
-        meshRepository,
         userMessagingRepository
       ).execute(roomID, socket.id)
     })

@@ -1,7 +1,7 @@
 import redis from 'redis'
 
 class RoomRepository {
-  inner: redis.RedisClient
+  private inner: redis.RedisClient
 
   constructor(inner) {
     // DB 0: room list

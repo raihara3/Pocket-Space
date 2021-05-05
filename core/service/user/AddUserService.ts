@@ -4,10 +4,10 @@ import MeshRepository from '../../repository/mesh/MeshRepository'
 import UserNameRepository from '../../repository/user/UserNameRepository'
 
 class AddUserService {
-  memberRepository: MemberRepository
-  userNameRepository: UserNameRepository
-  meshRepository: MeshRepository
-  userMessagingRepository: UserMessagingRepository
+  private memberRepository: MemberRepository
+  private userNameRepository: UserNameRepository
+  private meshRepository: MeshRepository
+  private userMessagingRepository: UserMessagingRepository
 
   constructor(memberRepository, userNameRepository, meshRepository, userMessagingRepository) {
     this.memberRepository = memberRepository

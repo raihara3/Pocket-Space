@@ -7,7 +7,7 @@ interface PeerOfferData {
 }
 
 class SendPeerOfferService {
-  userMessagingRepository: UserMessagingRepository
+  private userMessagingRepository: UserMessagingRepository
 
   constructor(userMessagingRepository) {
     this.userMessagingRepository = userMessagingRepository

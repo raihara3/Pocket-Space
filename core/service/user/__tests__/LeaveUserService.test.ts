@@ -19,7 +19,6 @@ describe('LeaveUserService', () => {
   const leaveUserService = new LeaveUserService(
     memberRepositoryMock,
     userNameRepositoryMock,
-    meshRepositoryMock,
     userMessagingRepositoryMock
   )
 

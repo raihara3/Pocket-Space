@@ -1,7 +1,7 @@
 import redis from 'redis'
 
 class MeshRepository {
-  inner: redis.RedisClient
+  private inner: redis.RedisClient
 
   constructor(inner) {
     // DB 2: mesh list

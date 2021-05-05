@@ -1,7 +1,7 @@
 import redis from 'redis'
 
 class UserNameRepository {
-  inner: redis.RedisClient
+  private inner: redis.RedisClient
 
   constructor(inner) {
     // DB 3: member list

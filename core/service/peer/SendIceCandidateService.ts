@@ -7,7 +7,7 @@ interface PeerIceData {
 }
 
 class SendIceCandidateService {
-  userMessagingRepository: UserMessagingRepository
+  private userMessagingRepository: UserMessagingRepository
 
   constructor(userMessagingRepository) {
     this.userMessagingRepository = userMessagingRepository
