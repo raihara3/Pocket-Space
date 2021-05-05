@@ -1,11 +1,11 @@
 import redis from 'redis'
-import getUrlParams from '../../src/utils/getUrlParams'
 import RoomRepository from '../../core/repository/room/RoomRepository'
 import GetRoomService from '../../core/service/room/GetRoomService'
 
 const getRoomHandler = async(req, res) => {
-  const params: any = getUrlParams(req.headers.referer)
-  const roomID = params.room
+  const requestUrl = req.headers.referer
+  const roomID = new URLSearchParams(requestUrl.slice(requestUrl.indexOf('?')))
+    .get('room')
   if(!roomID) {
     res.status(400).json({message: 'Bad Request'})
     res.end()

@@ -1,7 +1,6 @@
 import redis from 'redis'
 import { Server } from 'socket.io'
 import { createAdapter } from 'socket.io-redis'
-import getUrlParams from '../../src/utils/getUrlParams'
 import MemberRepository from '../../core/repository/user/MemberRepository'
 import UserNameRepository from '../../core/repository/user/UserNameRepository'
 import MeshRepository from '../../core/repository/mesh/MeshRepository'
@@ -23,12 +22,14 @@ const callHandler = async(req, res) => {
     return
   }
 
-  const params: any = getUrlParams(req.headers.referer)
-  const roomID = params.room
+  const requestUrl = req.headers.referer
+  const roomID: string | null = new URLSearchParams(requestUrl.slice(requestUrl.indexOf('?')))
+    .get('room')
   const userName = req.query.name
-  if(!roomID || !userName) {
+  if(roomID === null || !userName) {
     res.status(400).json({message: 'Bad Request'})
     res.end()
+    return
   }
 
   const redisOptions = {
