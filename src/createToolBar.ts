@@ -6,7 +6,7 @@ import {
 } from 'three'
 import AudioMedia from './AudioMedia'
 import ToolBar from '../threeComponents/molecules/ToolBar'
-import { deleteAllMeshHandler } from './emitter/Messaging'
+import { deleteAllMeshHandler, deleteMeshHandler } from './emitter/Messaging'
 
 const onColorChange = (scene: Scene, controller: Group, name: string) => {
   const disabledmentButton = scene.getObjectByName(controller.userData.colorName) as Mesh | undefined
@@ -120,6 +120,7 @@ export const createToolBar = (
         const lineId = controller.userData.history.back()
         const deleteLine = scene.getObjectByName(lineId)
         if(!deleteLine) return
+        deleteMeshHandler(socket, lineId)
         scene.remove(deleteLine)
       }
     },

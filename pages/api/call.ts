@@ -9,6 +9,7 @@ import RoomRepository from '../../core/repository/room/RoomRepository'
 import AddUserService from '../../core/service/user/AddUserService'
 import LeaveUserService from '../../core/service/user/LeaveUserService'
 import SendMeshService from '../../core/service/mesh/SendMeshService'
+import DeleteMeshService from '../../core/service/mesh/DeleteMeshService'
 import DeleteAllMeshService from '../../core/service/mesh/DeleteAllMeshService'
 import SendPeerOfferService from '../../core/service/peer/SendPeerOfferService'
 import SendPeerAnswerService from '../../core/service/peer/SendPeerAnswerService'
@@ -78,6 +79,10 @@ const callHandler = async(req, res) => {
     socket.on('sendMesh', data =>
       new SendMeshService(meshRepository, userMessagingRepository).execute(roomID, data)
     )
+
+    socket.on('deleteMesh', data => {
+      new DeleteMeshService(meshRepository, userMessagingRepository).execute(roomID, data)
+    })
 
     socket.on('deleteAllMesh', () => {
       new DeleteAllMeshService(meshRepository, userMessagingRepository).execute(roomID)

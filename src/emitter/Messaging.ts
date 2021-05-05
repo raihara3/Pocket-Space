@@ -49,6 +49,12 @@ export const receiveMessagingHandler = async(
     }
   })
 
+  socket.on('deleteMesh', (meshName: string) => {
+    const deleteMesh = webGL.scene.getObjectByName(meshName)
+    if(!deleteMesh) return
+    webGL.scene.remove(deleteMesh)
+  })
+
   socket.on('deleteAllMesh', () => {
     const target = webGL.scene.children.filter(mesh => mesh.type === 'Mesh')
     target.forEach(mesh => {
@@ -105,6 +111,10 @@ export const receiveMessagingHandler = async(
   socket.on('disconnect', () => {
     console.log('disconnect!!')
   })
+}
+
+export const deleteMeshHandler = (socket: SocketIOClient.Socket, name: string) => {
+  socket.emit('deleteMesh', name)
 }
 
 export const deleteAllMeshHandler = (socket: SocketIOClient.Socket) => {

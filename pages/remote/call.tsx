@@ -102,6 +102,7 @@ const Call = () => {
       controller.userData.history.add(painter.mesh.name)
       const data = painter.mesh.toJSON()
       sendMeshHandler(socket, {
+        name: painter.mesh.name,
         vertices: JSON.stringify(data.geometries[0].data.attributes.position.array),
         color: data.materials[0].color
       })
