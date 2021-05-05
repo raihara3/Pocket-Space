@@ -15,7 +15,7 @@ class Cursor {
   public position: BufferAttribute
   private color: string
 
-  constructor(color?: string) {
+  constructor(id: string, color?: string) {
     const bufferSize = 40000
 
     this.position = new BufferAttribute(new Float32Array(bufferSize), 3)
@@ -27,6 +27,7 @@ class Cursor {
     const material = new MeshBasicMaterial({color: new Color(this.color)})
 
     this.mesh = new Mesh(this.geometry, material)
+    this.mesh.name = id
     this.mesh.frustumCulled = false
   }
 
@@ -60,8 +61,8 @@ class Painter extends Cursor {
   private count: number
   private size: number
 
-  constructor(color?: string) {
-    super(color)
+  constructor(id: string, color?: string) {
+    super(id, color)
 
     this.target = new Vector3()
     this.eye = new Vector3()

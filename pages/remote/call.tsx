@@ -63,20 +63,23 @@ const Call = () => {
     session.addEventListener('end', () => location.reload())
 
     const controller = webGL.renderer.xr.getController(0)
-    controller.userData.colorName = 'white'
-    controller.userData.colorCode = '#ffffff'
-    controller.userData.skipFrames = 2
-    controller.userData.isSelecting = false
+    controller.userData = {
+      colorName: 'white',
+      colorCode: '#ffffff',
+      skipFrames: 2,
+      isSelecting: false,
+      history: new Array(10)
+    }
 
     createToolBar(webGL.scene, socket, audioMedia, controller)
 
     controller.addEventListener('selectstart', () => {
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
       const intersectButtons = webGL.raycaster.intersectObjects(webGL.scene.children, true)
-        .filter(mesh => mesh.object.name)
       if(intersectButtons.length) return
 
-      const painter = new Painter(controller.userData.colorCode)
+      const lineID = Math.random().toString(36).slice(-10)
+      const painter = new Painter(lineID, controller.userData.colorCode)
       webGL.scene.add(painter.mesh)
       controller.userData.painter = painter
       controller.userData.isSelecting = true
@@ -89,13 +92,14 @@ const Call = () => {
 
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
       const intersectButtons = webGL.raycaster.intersectObjects(webGL.scene.children, true)
-        .filter(mesh => mesh.object.name)
       if(intersectButtons.length) {
         intersectButtons[0].object.dispatchEvent({type: 'click'})
         return
       }
 
-      const painter = controller.userData.painter
+      const painter: Painter = controller.userData.painter
+      controller.userData.history.shift()
+      controller.userData.history.push(painter.mesh.name)
       const data = painter.mesh.toJSON()
       sendMeshHandler(socket, {
         vertices: JSON.stringify(data.geometries[0].data.attributes.position.array),
