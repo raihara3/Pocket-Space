@@ -16,7 +16,8 @@
     "build-storybook": "build-storybook",
     "lint": "yarn run eslint",
     "analyze": "cross-env ANALYZE=true next build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@babel/preset-react": "^7.13.13",
@@ -34,9 +35,10 @@
     "autoprefixer": "^10.2.5",
     "cross-env": "^7.0.3",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "graphql-tag": "^2.12.4",
     "graphql-tools": "^7.0.4",
-    "husky": "6",
     "lint-staged": "^10.5.4",
     "memorystorage": "^0.12.0",
     "next": "10.2.0",
@@ -44,6 +46,7 @@
     "node-mocks-http": "^1.10.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.2.13",
+    "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
     "pusher": "^5.0.0",
     "pusher-js": "^7.0.3",
@@ -78,7 +81,7 @@
     "babel-loader": "^8.2.2",
     "eslint": "^7.25.0",
     "eslint-plugin-react": "^7.23.2",
-    "jest": "^26.6.3",
-    "husky": "^6.0.0"
+    "husky": "^6.0.0",
+    "jest": "^26.6.3"
   }
 }
