@@ -14,6 +14,7 @@ import Card from '../../components/molecules/Card'
 import InputField from '../../components/atoms/InputField'
 import AudioMedia from '../../src/AudioMedia'
 import Painter from '../../src/Painter'
+import History from '../../src/History'
 
 const Call = () => {
   const [isSupported, setIsSupported] = useState(false)
@@ -68,7 +69,7 @@ const Call = () => {
       colorCode: '#ffffff',
       skipFrames: 2,
       isSelecting: false,
-      history: new Array(10)
+      history: new History(10)
     }
 
     createToolBar(webGL.scene, socket, audioMedia, controller)
@@ -98,8 +99,7 @@ const Call = () => {
       }
 
       const painter: Painter = controller.userData.painter
-      controller.userData.history.shift()
-      controller.userData.history.push(painter.mesh.name)
+      controller.userData.history.add(painter.mesh.name)
       const data = painter.mesh.toJSON()
       sendMeshHandler(socket, {
         vertices: JSON.stringify(data.geometries[0].data.attributes.position.array),

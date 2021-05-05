@@ -108,6 +108,19 @@ export const createToolBar = (
       isDefaultSelected: false,
       onClick: () => {
         deleteAllMeshHandler(socket)
+        controller.userData.history.deleteAll()
+      }
+    },
+    {
+      name: 'back',
+      color: '#7d7d7d',
+      imgSrc: '/textures/back.png',
+      isDefaultSelected: false,
+      onClick: () => {
+        const lineId = controller.userData.history.back()
+        const deleteLine = scene.getObjectByName(lineId)
+        if(!deleteLine) return
+        scene.remove(deleteLine)
       }
     },
     {
