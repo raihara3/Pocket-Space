@@ -21,13 +21,11 @@ beforeAll((done) => {
   })
   done()
 })
-
 afterAll((done) => {
   ioServer.close()
   httpServer.close()
   done()
 })
-
 beforeEach((done) => {
   const uri = `http://[${httpServerAddress.address}]:${httpServerAddress.port}`
   const option = {
@@ -40,7 +38,6 @@ beforeEach((done) => {
   myClient = io(uri, option)
   myClient.on('connect', () => done())
 })
-
 afterEach((done) => {
   if (otherClient.connected) {
     otherClient.disconnect()
@@ -50,10 +47,11 @@ afterEach((done) => {
   }
   done()
 })
-
 describe('UserMessagingRepository', () => {
   const sender = (eventName, data, targetID) => {
-    return targetID ? socket.to(targetID).emit(eventName, data) : socket.emit(eventName, data)
+    return targetID
+      ? socket.to(targetID).emit(eventName, data)
+      : socket.emit(eventName, data)
   }
   const broadcast = (eventName, data) => socket.broadcast.emit(eventName, data)
   const userMessagingRepository = new UserMessagingRepository(sender, broadcast)

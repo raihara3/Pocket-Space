@@ -7,17 +7,15 @@ const userName = 'test_name'
 describe('UserNameRepository', () => {
   const userNameRepository = new UserNameRepository(redis.createClient())
 
-  test('add', async() => {
+  test('add', async () => {
     const res = await userNameRepository.add(userID, userName)
     expect(res).toBe('OK')
   })
-
-  test('remove', async() => {
+  test('remove', async () => {
     const res = await userNameRepository.remove(userID)
     expect(res).toBe(1)
   })
-
-  test('remove non-existent useerID', async() => {
+  test('remove non-existent useerID', async () => {
     const notExistRoomID = 'notExistRoomID'
     const res = await userNameRepository.remove(notExistRoomID)
     expect(res).toBe(0)

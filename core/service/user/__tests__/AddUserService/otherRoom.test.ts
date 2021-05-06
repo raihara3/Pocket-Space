@@ -18,10 +18,18 @@ const setUpSocket = (userID, userName, memberList) => {
     return socket.emit(eventName, data)
   }
   socket.socketClient.on('join', (data) => {
-    expect(data).toEqual({myID: userID, userName: userName, memberList: memberList})
+    expect(data).toEqual({
+      myID: userID,
+      userName: userName,
+      memberList: memberList,
+    })
   })
   socket.socketClient.on('addUser', (data) => {
-    expect(data).toEqual({newEntryID: userID, userName: userName, memberList: memberList})
+    expect(data).toEqual({
+      newEntryID: userID,
+      userName: userName,
+      memberList: memberList,
+    })
   })
   socket.socketClient.on('getMesh', (data) => {
     expect(data).toEqual([])
@@ -35,19 +43,19 @@ describe.each([
     userID: 'user1_id',
     userName: 'user1_name',
     response: {
-      memberList: ['user1_id']
-    }
+      memberList: ['user1_id'],
+    },
   },
   {
     roomID: 'testRoom2',
     userID: 'user2_id',
     userName: 'user2_name',
     response: {
-      memberList: ['user2_id']
-    }
-  }
-])('AddUserService. (%o)', ({roomID, userID, userName, response}) => {
-  test('Enter the other Room', async() => {
+      memberList: ['user2_id'],
+    },
+  },
+])('AddUserService. (%o)', ({ roomID, userID, userName, response }) => {
+  test('Enter the other Room', async () => {
     const sender = setUpSocket(userID, userName, response.memberList)
     const userMessagingRepository = new UserMessagingRepository(sender, sender)
 

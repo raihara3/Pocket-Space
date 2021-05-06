@@ -10,12 +10,10 @@ describe('History', () => {
     history.add('his3')
     expect(history.getHistory).toEqual([null, null, 'his1', 'his2', 'his3'])
   })
-
   test('back', () => {
     history.back()
     expect(history.getHistory).toEqual([null, null, null, 'his1', 'his2'])
   })
-
   test('deleteAll', () => {
     history.deleteAll()
     expect(history.getHistory).toEqual([null, null, null, null, null])

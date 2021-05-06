@@ -6,14 +6,8 @@ interface Props {
   hidden?: boolean
 }
 
-const Video: React.FC<Props> = ({
-  id,
-  autoPlay = true,
-  hidden = false
-}) => {
-  return (
-    <video id={id} autoPlay={autoPlay} hidden={hidden} />
-  )
+const Video: React.FC<Props> = ({ id, autoPlay = true, hidden = false }) => {
+  return <video id={id} autoPlay={autoPlay} hidden={hidden} />
 }
 
 export default memo(Video)

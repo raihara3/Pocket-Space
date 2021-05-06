@@ -8,29 +8,23 @@ interface Props {
   children?: React.ReactNode
 }
 
-const Card: React.FC<Props> = ({
-  title,
-  description,
-  children
-}) => {
- return (
+const Card: React.FC<Props> = ({ title, description, children }) => {
+  return (
     <Box>
       <Title>{title}</Title>
-      <Contents>
-        {description}
-      </Contents>
+      <Contents>{description}</Contents>
       {children}
     </Box>
- )
+  )
 }
 
 const Box = styled.div`
   margin: 10px 0 0;
   padding: 10px 15px;
   background-color: ${colors.white01};
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 4px;
-  box-shadow: 0px 0px 22px -11px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 22px -11px rgba(0, 0, 0, 0.3);
 `
 
 const Title = styled.h2`

@@ -5,8 +5,7 @@ const UserNameRepositoryMock = jest.fn((storage) => {
     },
     remove: (userID: string) => {
       delete storage[userID]
-    }
+    },
   }
 })
-
 export default UserNameRepositoryMock

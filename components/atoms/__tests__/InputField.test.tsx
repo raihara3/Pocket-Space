@@ -4,46 +4,29 @@ import InputField from '../InputField'
 
 test('normal', () => {
   const tree = renderer
-    .create(
-      <InputField
-        placeholder='Input field'
-      />
-    )
+    .create(<InputField placeholder="Input field" />)
     .toJSON()
   expect(tree).toMatchSnapshot()
 })
-
 test('readOnly', () => {
   const tree = renderer
-    .create(
-      <InputField
-        placeholder='Input field'
-        readonly={true}
-      />
-    )
+    .create(<InputField placeholder="Input field" readonly={true} />)
     .toJSON()
   expect(tree).toMatchSnapshot()
 })
-
 test('disabled', () => {
   const tree = renderer
-    .create(
-      <InputField
-        placeholder='Input field'
-        disabled={true}
-      />
-    )
+    .create(<InputField placeholder="Input field" disabled={true} />)
     .toJSON()
   expect(tree).toMatchSnapshot()
 })
-
 test('hasError', () => {
   const tree = renderer
     .create(
       <InputField
-        placeholder='Input field'
+        placeholder="Input field"
         hasError={true}
-        errorMessage='has error!'
+        errorMessage="has error!"
       />
     )
     .toJSON()

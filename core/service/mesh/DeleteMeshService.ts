@@ -12,7 +12,9 @@ class DeleteAllMeshService {
 
   async execute(roomID: string, meshName: string) {
     const meshList = await this.meshRepository.list(roomID)
-    const newMeshList = meshList.filter(mesh => JSON.parse(mesh).name !== meshName)
+    const newMeshList = meshList.filter(
+      (mesh) => JSON.parse(mesh).name !== meshName
+    )
     await this.meshRepository.add(roomID, JSON.stringify(newMeshList))
     this.userMessagingRepository.toOther('deleteMesh', meshName)
   }

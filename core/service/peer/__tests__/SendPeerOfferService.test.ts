@@ -4,14 +4,16 @@ import SendPeerOfferService from '../SendPeerOfferService'
 const data = {
   targetID: 'test_target_id',
   senderID: 'test_sender_id',
-  sdp: {}
+  sdp: {},
 }
 
 describe('SendPeerOfferService', () => {
   const userMessagingRepositoryMock = new UserMessagingRepositoryMock()
-  const sendPeerOfferService = new SendPeerOfferService(userMessagingRepositoryMock)
+  const sendPeerOfferService = new SendPeerOfferService(
+    userMessagingRepositoryMock
+  )
 
-  test('execute', async() => {
+  test('execute', async () => {
     await sendPeerOfferService.execute(data)
     expect(userMessagingRepositoryMock.to.call.length).toBe(1)
   })

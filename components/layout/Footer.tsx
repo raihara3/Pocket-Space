@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <ImageBox>
-        <Image src='/raihara3.png' width='30' height='30' alt='' />
+        <Image src="/raihara3.png" width="30" height="30" alt="" />
       </ImageBox>
       <CopyRight>&copy;2021 raihara3</CopyRight>
     </FooterContainer>

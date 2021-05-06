@@ -22,14 +22,14 @@ describe('LeaveUserService', () => {
     userMessagingRepositoryMock
   )
 
-  test('execute', async() => {
+  test('execute', async () => {
     await leaveUserService.execute(roomID, userID)
 
     expect(userNameRepositoryMock.remove.call.length).toBe(1)
     expect(memberRepositoryMock.remove.call.length).toBe(1)
     expect(userMessagingRepositoryMock.toOther.call.length).toBe(1)
 
-    if(!memberRepositoryMock.list(roomID)) {
+    if (!memberRepositoryMock.list(roomID)) {
       expect(meshRepositoryMock.delete.call.length).toBe(1)
     }
   })

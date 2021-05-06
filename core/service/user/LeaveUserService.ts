@@ -19,7 +19,7 @@ class LeaveUserService {
     const memberList = await this.memberRepository.list(roomID)
     this.userMessagingRepository.toOther('leaveUser', {
       userID: userID,
-      memberList: memberList
+      memberList: memberList,
     })
   }
 }

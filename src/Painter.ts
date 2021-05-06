@@ -6,7 +6,7 @@ import {
   Color,
   Mesh,
   Vector3,
-  Matrix4
+  Matrix4,
 } from 'three'
 
 class Cursor {
@@ -24,7 +24,7 @@ class Cursor {
     this.geometry.setAttribute('position', this.position)
     this.geometry.drawRange.count = 0
     this.color = color ?? '#ffffff'
-    const material = new MeshBasicMaterial({color: new Color(this.color)})
+    const material = new MeshBasicMaterial({ color: new Color(this.color) })
 
     this.mesh = new Mesh(this.geometry, material)
     this.mesh.name = name
@@ -46,9 +46,11 @@ const getPoints = (size: number) => {
   const array: Array<Vector3> = []
   const radius = 0.01 * size
 
-  for(let i = 0; i < sides; i++) {
+  for (let i = 0; i < sides; i++) {
     const angle = (i / sides) * PI2
-    array.push(new Vector3(Math.sin(angle) * radius, Math.cos(angle) * radius, 0))
+    array.push(
+      new Vector3(Math.sin(angle) * radius, Math.cos(angle) * radius, 0)
+    )
   }
   return array
 }
@@ -79,31 +81,31 @@ class Painter extends Cursor {
   }
 
   private stroke() {
-    if (this.eye.distanceToSquared(this.target) === 0 ) return
+    if (this.eye.distanceToSquared(this.target) === 0) return
 
     const vector1 = new Vector3()
-		const vector2 = new Vector3()
-		const vector3 = new Vector3()
-		const vector4 = new Vector3()
+    const vector2 = new Vector3()
+    const vector3 = new Vector3()
+    const vector4 = new Vector3()
     let count = this.geometry.drawRange.count
     const points = getPoints(this.size)
 
-    for(let i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length; i++) {
       const vertex1 = points[i]
       const vertex2 = points[(i + 1) % points.length]
 
       vector1.copy(vertex1).applyMatrix4(this.matrix2).add(this.eye)
-			vector2.copy(vertex2).applyMatrix4(this.matrix2).add(this.eye)
-			vector3.copy(vertex2).applyMatrix4(this.matrix1).add(this.target)
-			vector4.copy(vertex1).applyMatrix4(this.matrix1).add(this.target)
+      vector2.copy(vertex2).applyMatrix4(this.matrix2).add(this.eye)
+      vector3.copy(vertex2).applyMatrix4(this.matrix1).add(this.target)
+      vector4.copy(vertex1).applyMatrix4(this.matrix1).add(this.target)
 
-			vector1.toArray(this.position.array, (count + 0) * 3)
-			vector2.toArray(this.position.array, (count + 1) * 3)
-			vector4.toArray(this.position.array, (count + 2) * 3)
+      vector1.toArray(this.position.array, (count + 0) * 3)
+      vector2.toArray(this.position.array, (count + 1) * 3)
+      vector4.toArray(this.position.array, (count + 2) * 3)
 
-			vector2.toArray(this.position.array, (count + 3) * 3)
-			vector3.toArray(this.position.array, (count + 4) * 3)
-			vector4.toArray(this.position.array, (count + 5) * 3)
+      vector2.toArray(this.position.array, (count + 3) * 3)
+      vector3.toArray(this.position.array, (count + 4) * 3)
+      vector4.toArray(this.position.array, (count + 5) * 3)
 
       count += 6
     }
@@ -113,7 +115,7 @@ class Painter extends Cursor {
   private update() {
     const start = this.count
     const end = this.geometry.drawRange.count
-    if(start === end) return
+    if (start === end) return
 
     this.position.updateRange.offset = start * 3
     this.position.updateRange.count = (end - start) * 3

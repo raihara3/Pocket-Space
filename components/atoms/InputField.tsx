@@ -29,7 +29,7 @@ const InputField: React.FC<Props> = ({
   defaultValue,
   hasError = false,
   errorMessage,
-  onChange
+  onChange,
 }) => {
   return (
     <InputBox>
@@ -40,7 +40,7 @@ const InputField: React.FC<Props> = ({
           name={name}
           ref={inputRef}
           type={type}
-          readOnly={readonly}
+          readonly={readonly}
           disabled={disabled}
           placeholder={placeholder}
           defaultValue={defaultValue}
@@ -48,9 +48,7 @@ const InputField: React.FC<Props> = ({
             onChange && onChange(e)
           }}
         />
-        {hasError && (
-          <ErrorMessage>{errorMessage}</ErrorMessage>
-        )}
+        {hasError && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </label>
     </InputBox>
   )
@@ -60,7 +58,7 @@ const InputBox = styled.div`
   margin: 0 0 10px;
 `
 
-const Input = styled.input<{readOnly: boolean}>`
+const Input = styled.input<{ readonly: boolean }>`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -73,8 +71,9 @@ const Input = styled.input<{readOnly: boolean}>`
   background: transparent;
   color: ${colors.black01};
   border-bottom: 1px solid ${colors.white02};
-
-  ${({readOnly}) => readOnly && `
+  ${({ readonly }) =>
+    readonly &&
+    `
     color: rgba(255,255,255,0.3);
     font-size: 10px;
     border: none;

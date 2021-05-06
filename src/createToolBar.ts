@@ -1,17 +1,14 @@
-import {
-  Scene,
-  Group,
-  BoxGeometry,
-  Mesh
-} from 'three'
+import { Scene, Group, BoxGeometry, Mesh } from 'three'
 import AudioMedia from './AudioMedia'
 import ToolBar from '../threeComponents/molecules/ToolBar'
 import { deleteAllMeshHandler, deleteMeshHandler } from './emitter/Messaging'
 
 const onColorChange = (scene: Scene, controller: Group, name: string) => {
-  const disabledmentButton = scene.getObjectByName(controller.userData.colorName) as Mesh | undefined
+  const disabledmentButton = scene.getObjectByName(
+    controller.userData.colorName
+  ) as Mesh | undefined
   const clickedButton = scene.getObjectByName(name) as Mesh | undefined
-  if(disabledmentButton === undefined || clickedButton === undefined) return
+  if (disabledmentButton === undefined || clickedButton === undefined) return
 
   onPushIn(false, disabledmentButton)
   controller.userData.colorName = clickedButton.name
@@ -20,13 +17,13 @@ const onColorChange = (scene: Scene, controller: Group, name: string) => {
 }
 
 const onPushIn = (hasPushIn: boolean, mesh: Mesh) => {
-  if(hasPushIn) {
+  if (hasPushIn) {
     mesh.scale.z = 0.5
     mesh.position.z = 0
-  }else {
+  } else {
     mesh.scale.z = 1
     const geometry = mesh.geometry as BoxGeometry
-    mesh.position.z = (geometry.parameters.depth) / 2
+    mesh.position.z = geometry.parameters.depth / 2
   }
 }
 
@@ -39,11 +36,11 @@ interface ButtonInfo {
 }
 
 export const createToolBar = (
-    scene: Scene,
-    socket: SocketIOClient.Socket,
-    audioMedia: AudioMedia,
-    controller: Group
-  ) => {
+  scene: Scene,
+  socket: SocketIOClient.Socket,
+  audioMedia: AudioMedia,
+  controller: Group
+) => {
   const buttonList: Array<ButtonInfo> = [
     {
       name: 'red',
@@ -51,7 +48,7 @@ export const createToolBar = (
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'red')
-      }
+      },
     },
     {
       name: 'yellow',
@@ -59,7 +56,7 @@ export const createToolBar = (
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'yellow')
-      }
+      },
     },
     {
       name: 'green',
@@ -67,7 +64,7 @@ export const createToolBar = (
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'green')
-      }
+      },
     },
     {
       name: 'blue',
@@ -75,7 +72,7 @@ export const createToolBar = (
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'blue')
-      }
+      },
     },
     {
       name: 'pink',
@@ -83,7 +80,7 @@ export const createToolBar = (
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'pink')
-      }
+      },
     },
     {
       name: 'black',
@@ -91,7 +88,7 @@ export const createToolBar = (
       isDefaultSelected: false,
       onClick: () => {
         onColorChange(scene, controller, 'black')
-      }
+      },
     },
     {
       name: 'white',
@@ -99,7 +96,7 @@ export const createToolBar = (
       isDefaultSelected: true,
       onClick: () => {
         onColorChange(scene, controller, 'white')
-      }
+      },
     },
     {
       name: 'trash',
@@ -109,7 +106,7 @@ export const createToolBar = (
       onClick: () => {
         deleteAllMeshHandler(socket)
         controller.userData.history.deleteAll()
-      }
+      },
     },
     {
       name: 'back',
@@ -119,10 +116,10 @@ export const createToolBar = (
       onClick: () => {
         const lineId = controller.userData.history.back()
         const deleteLine = scene.getObjectByName(lineId)
-        if(!deleteLine) return
+        if (!deleteLine) return
         deleteMeshHandler(socket, lineId)
         scene.remove(deleteLine)
-      }
+      },
     },
     {
       name: 'mic',
@@ -132,9 +129,9 @@ export const createToolBar = (
       onClick: () => {
         const enabled = audioMedia.switching()
         const mic = scene.getObjectByName('mic') as Mesh | undefined
-        if(mic === undefined) return
+        if (mic === undefined) return
         onPushIn(enabled, mic)
-      }
+      },
     },
     {
       name: 'exit',
@@ -143,16 +140,16 @@ export const createToolBar = (
       isDefaultSelected: false,
       onClick: () => {
         location.reload()
-      }
+      },
     },
   ]
 
   const toolBar = new ToolBar(buttonList, {
     width: 0.01,
     height: 0.01,
-    depth: 0.005
+    depth: 0.005,
   }).execute()
-  if(toolBar === null) return
+  if (toolBar === null) return
 
   toolBar.position.set(0, -0.1, -0.1)
   scene.add(toolBar)

@@ -4,14 +4,16 @@ import SendIceCandidateService from '../SendIceCandidateService'
 const data = {
   targetID: 'test_target_id',
   senderID: 'test_sender_id',
-  ice: {}
+  ice: {},
 }
 
 describe('SendIceCandidateService', () => {
   const userMessagingRepositoryMock = new UserMessagingRepositoryMock()
-  const sendIceCandidateService = new SendIceCandidateService(userMessagingRepositoryMock)
+  const sendIceCandidateService = new SendIceCandidateService(
+    userMessagingRepositoryMock
+  )
 
-  test('execute', async() => {
+  test('execute', async () => {
     await sendIceCandidateService.execute(data)
 
     expect(userMessagingRepositoryMock.to.call.length).toBe(1)

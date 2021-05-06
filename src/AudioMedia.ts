@@ -12,12 +12,12 @@ class AudioMedia {
   }
 
   get getTrack() {
-    if(!this.stream) return
+    if (!this.stream) return
     return this.stream.getAudioTracks()[0]
   }
 
   switching() {
-    if(!this.stream) return false
+    if (!this.stream) return false
     const enabled = this.stream.getAudioTracks()[0].enabled
     this.stream.getAudioTracks()[0].enabled = !enabled
     return !enabled

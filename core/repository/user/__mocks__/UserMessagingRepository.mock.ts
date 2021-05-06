@@ -1,13 +1,20 @@
 const UserMessagingRepositoryMock = jest.fn(() => {
   return {
-    toAll: () => {return},
+    toAll: () => {
+      return
+    },
 
-    toOther: () => {return},
+    toOther: () => {
+      return
+    },
 
-    toSender: () => {return},
+    toSender: () => {
+      return
+    },
 
-    to: () => {return}
+    to: () => {
+      return
+    },
   }
 })
-
 export default UserMessagingRepositoryMock

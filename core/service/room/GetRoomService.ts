@@ -13,7 +13,7 @@ class GetRoomService {
 
   async getRemainingTime(roomID: string) {
     const res = await this.roomRepository.getExpire(roomID)
-    return res > 0 ? Math.floor(res / (60*60)) : res
+    return res > 0 ? Math.floor(res / (60 * 60)) : res
   }
 }
 

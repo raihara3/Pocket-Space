@@ -9,13 +9,15 @@ import Card from '../components/molecules/Card'
 const Index = () => {
   const [roomURL, setRoomURL] = useState<string>('')
   const [hasError, setHasError] = useState<boolean>(false)
-  const [isClickedCreateButton, setIsClickedCreateButton] = useState<boolean>(false)
+  const [isClickedCreateButton, setIsClickedCreateButton] = useState<boolean>(
+    false
+  )
 
-  const createRoom = async() => {
+  const createRoom = async () => {
     setIsClickedCreateButton(true)
     const res: any = await fetch('../api/createRoom')
     const json = await res.json()
-    if(!res.ok) {
+    if (!res.ok) {
       console.error(new Error(json.message))
       setHasError(true)
       return
@@ -35,17 +37,17 @@ const Index = () => {
           </ErrorBox>
         )}
         <span>
-          This is a service that allows multiple people to play with WebAR while talking on the phone.
+          This is a service that allows multiple people to play with WebAR while
+          talking on the phone.
         </span>
-        <Card
-          title='Create a Room'
-        >
+        <Card title="Create a Room">
           <p>
-            No account is required, just create a Room. It will expire in 24 hours.
+            No account is required, just create a Room. It will expire in 24
+            hours.
           </p>
           <Button
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             disabled={isClickedCreateButton}
             onClick={() => createRoom()}
           >
@@ -53,12 +55,8 @@ const Index = () => {
           </Button>
         </Card>
         {roomURL && (
-          <Card
-            title='Join us'
-          >
-            <p>
-              Create a Room and share the URL with your friends.
-            </p>
+          <Card title="Join us">
+            <p>Create a Room and share the URL with your friends.</p>
             <a href={roomURL}>{roomURL}</a>
           </Card>
         )}

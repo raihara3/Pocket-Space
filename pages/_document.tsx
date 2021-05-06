@@ -31,11 +31,14 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang='en'>
+      <Html lang="en">
         <Head>
           <title>AR Meet</title>
-          <link rel='icon' href='/favicon.ico' type='image/x-icon' />
-          <meta name='description' content='This service allows you to play with AR while making calls.' />
+          <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+          <meta
+            name="description"
+            content="This service allows you to play with AR while making calls."
+          />
         </Head>
         <body>
           <Main />

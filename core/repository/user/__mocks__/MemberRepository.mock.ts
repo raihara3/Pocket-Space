@@ -10,10 +10,9 @@ const MemberRepositoryMock = jest.fn((storage) => {
     },
     remove: (roomID: string, socketID: string) => {
       const memberList: Array<string> = storage[roomID]
-      if(!memberList) return
+      if (!memberList) return
       storage[roomID] = memberList.splice(memberList.indexOf(socketID), 1)
-    }
+    },
   }
 })
-
 export default MemberRepositoryMock

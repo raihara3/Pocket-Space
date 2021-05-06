@@ -3,7 +3,7 @@ import {
   MeshBasicMaterial,
   Color,
   TextureLoader,
-  Mesh
+  Mesh,
 } from 'three'
 
 class Button {
@@ -24,14 +24,22 @@ class Button {
   }
 
   execute() {
-    const geometry = new BoxGeometry(this.size.width, this.size.height, this.size.depth)
-    const colorTexture = new MeshBasicMaterial({color: new Color(this.color)})
+    const geometry = new BoxGeometry(
+      this.size.width,
+      this.size.height,
+      this.size.depth
+    )
+    const colorTexture = new MeshBasicMaterial({
+      color: new Color(this.color),
+    })
     const material = [
       colorTexture,
       colorTexture,
       colorTexture,
       colorTexture,
-      this.imgSrc ? new MeshBasicMaterial({map: new TextureLoader().load(this.imgSrc)}) : colorTexture,
+      this.imgSrc
+        ? new MeshBasicMaterial({ map: new TextureLoader().load(this.imgSrc) })
+        : colorTexture,
       colorTexture,
     ]
     const mesh = new Mesh(geometry, material)

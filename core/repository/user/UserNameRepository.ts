@@ -9,10 +9,10 @@ class UserNameRepository {
   }
 
   add(userID: string, userName: string) {
-    if(!userID) return
+    if (!userID) return
     return new Promise((resolve, reject) => {
       this.inner.setex(userID, 60 * 60 * 24 * 1, userName, (error, reply) => {
-        if(error) {
+        if (error) {
           reject(error)
         }
         resolve(reply)
@@ -23,7 +23,7 @@ class UserNameRepository {
   remove(userID: string) {
     return new Promise((resolve, reject) => {
       this.inner.del(userID, (error, reply) => {
-        if(error) {
+        if (error) {
           reject(error)
         }
         resolve(reply)

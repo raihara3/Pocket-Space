@@ -14,11 +14,15 @@ class SendIceCandidateService {
   }
 
   async execute(data: PeerIceData) {
-    if(!Object.keys(data).length) return
-    this.userMessagingRepository.to('getIceCandidate', {
-      senderID: data.senderID,
-      ice: data.ice
-    }, data.targetID)
+    if (!Object.keys(data).length) return
+    this.userMessagingRepository.to(
+      'getIceCandidate',
+      {
+        senderID: data.senderID,
+        ice: data.ice,
+      },
+      data.targetID
+    )
   }
 }
 

@@ -21,5 +21,4 @@ const RoomRepositoryMock = jest.fn((storage) => {
     },
   }
 })
-
 export default RoomRepositoryMock

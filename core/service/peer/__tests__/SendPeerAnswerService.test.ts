@@ -4,14 +4,16 @@ import SendPeerAnswerService from '../SendPeerAnswerService'
 const data = {
   targetID: 'test_target_id',
   senderID: 'test_sender_id',
-  sdp: {}
+  sdp: {},
 }
 
 describe('SendPeerAnswerService', () => {
   const userMessagingRepositoryMock = new UserMessagingRepositoryMock()
-  const sendPeerAnswerService = new SendPeerAnswerService(userMessagingRepositoryMock)
+  const sendPeerAnswerService = new SendPeerAnswerService(
+    userMessagingRepositoryMock
+  )
 
-  test('execute', async() => {
+  test('execute', async () => {
     await sendPeerAnswerService.execute(data)
 
     expect(userMessagingRepositoryMock.to.call.length).toBe(1)

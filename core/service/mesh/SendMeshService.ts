@@ -11,7 +11,7 @@ class SendMeshService {
   }
 
   async execute(roomID: string, data: any) {
-    if(!Object.keys(data).length) return
+    if (!Object.keys(data).length) return
     await this.meshRepository.add(roomID, JSON.stringify(data))
     this.userMessagingRepository.toOther('getMesh', [data])
   }

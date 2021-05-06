@@ -15,8 +15,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "lint:eslint lint:stylelint",
-    "lint:eslint": "eslint '**/*.{ts,tsx,js,json}'",
-    "lint:stylelint": "stylelint **/*.{css,scss,tsx}",
+    "lint:eslint": "eslint --fix '**/*.{ts,tsx,json}'",
+    "lint:stylelint": "stylelint **/*.tsx",
     "analyze": "cross-env ANALYZE=true next build",
     "prepare": "husky install",
     "prettier": "prettier --write ."

@@ -9,7 +9,12 @@ class AddUserService {
   private meshRepository: MeshRepository
   private userMessagingRepository: UserMessagingRepository
 
-  constructor(memberRepository, userNameRepository, meshRepository, userMessagingRepository) {
+  constructor(
+    memberRepository,
+    userNameRepository,
+    meshRepository,
+    userMessagingRepository
+  ) {
     this.memberRepository = memberRepository
     this.userNameRepository = userNameRepository
     this.meshRepository = meshRepository
@@ -24,16 +29,19 @@ class AddUserService {
     this.userMessagingRepository.toSender('join', {
       myID: newEntryID,
       userName: userName,
-      memberList: memberList
+      memberList: memberList,
     })
     this.userMessagingRepository.toOther('addUser', {
       newEntryID: newEntryID,
       userName: userName,
-      memberList: memberList
+      memberList: memberList,
     })
 
     const meshList: Array<string> = await this.meshRepository.list(roomID)
-    this.userMessagingRepository.toSender('getMesh', meshList.map(mesh => JSON.parse(mesh)))
+    this.userMessagingRepository.toSender(
+      'getMesh',
+      meshList.map((mesh) => JSON.parse(mesh))
+    )
   }
 }
 

@@ -8,5 +8,8 @@
   ],
   "ignoreFiles": [
     "**/node_modules/**"
-  ]
+  ],
+  "rules": {
+    "no-empty-source": null
+  }
 }

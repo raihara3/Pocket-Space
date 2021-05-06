@@ -35,12 +35,10 @@ export const receiveMessagingHandler = async (
     peerList[newEntryID] = peerConnection
     sendPeerOfferHandler(socket, newEntryID, offer)
   })
-
   socket.on('join', ({ myID, userName, memberList }) => {
     setMemberList(memberList)
     console.log(`myID: ${myID}, userName: ${userName}`)
   })
-
   socket.on('getMesh', (data) => {
     try {
       parsePainter(webGL.scene, data)
@@ -54,7 +52,6 @@ export const receiveMessagingHandler = async (
     if (!deleteMesh) return
     webGL.scene.remove(deleteMesh)
   })
-
   socket.on('deleteAllMesh', () => {
     const target = webGL.scene.children.filter((mesh) => mesh.type === 'Mesh')
     target.forEach((mesh) => {
@@ -66,7 +63,6 @@ export const receiveMessagingHandler = async (
     })
     webGL.renderer.renderLists.dispose()
   })
-
   socket.on('getOffer', async ({ senderID, sdp }) => {
     if (!audioMedia.stream) return
     const peerConnection = new RTCPeerConnection({
@@ -91,23 +87,19 @@ export const receiveMessagingHandler = async (
 
     sendPeerAnswerHandler(socket, senderID, answer)
   })
-
   socket.on('getAnswer', async ({ senderID, sdp }) => {
     const peerConnection: RTCPeerConnection = peerList[senderID]
     peerConnection.setRemoteDescription(sdp)
     peerList[senderID] = peerConnection
   })
-
   socket.on('getIceCandidate', async ({ senderID, ice }) => {
     const peerConnection: RTCPeerConnection = peerList[senderID]
     await peerConnection?.addIceCandidate(new RTCIceCandidate(ice))
   })
-
   socket.on('leaveUser', ({ id, memberList }) => {
     setMemberList(memberList)
     delete peerList[id]
   })
-
   socket.on('disconnect', () => {
     console.log('disconnect!!')
   })

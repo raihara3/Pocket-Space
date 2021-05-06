@@ -6,9 +6,9 @@ import { Provider as NextAuthProvider } from 'next-auth/client'
 
 const App = ({ Component, pageProps }) => {
   return (
-    <NextAuthProvider session={ pageProps.session }>
+    <NextAuthProvider session={pageProps.session}>
       <ThemeProvider theme={theme}>
-        <Component { ...pageProps } />
+        <Component {...pageProps} />
       </ThemeProvider>
     </NextAuthProvider>
   )

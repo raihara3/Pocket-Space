@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorAlert } from "../components/atoms/Alert"
+import { ErrorAlert } from '../components/atoms/Alert'
 
 const Error = () => {
   return <ErrorAlert label="Not Found" />
