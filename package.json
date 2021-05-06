@@ -14,7 +14,7 @@
     "docker": "docker-compose up",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "lint": "lint:eslint lint:stylelint",
+    "lint": "run-s lint:eslint lint:stylelint",
     "lint:eslint": "eslint --fix '**/*.{ts,tsx,json}'",
     "lint:stylelint": "stylelint **/*.tsx",
     "analyze": "cross-env ANALYZE=true next build",

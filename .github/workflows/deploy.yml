@@ -24,7 +24,7 @@ jobs:
       - name: Install modules
         run: yarn
 
-      - name: Run ESLint
+      - name: Run ESLint & Stylelint
         run: yarn run lint
 
       - name: Run Jest
