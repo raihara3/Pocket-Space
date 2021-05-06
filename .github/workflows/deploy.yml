@@ -105,7 +105,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Slack Notification
+      - name: Slack Notification on Success
+        if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
+          SLACK_TITLE: Deploy Success
+          SLACK_COLOR: good
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Slack Notification on Failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: Deploy Failure
+          SLACK_COLOR: danger
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
