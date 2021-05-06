@@ -1,33 +1,33 @@
-import { parssePainter, Painter } from '../../threeComponents/Mesh'
+import { parsePainter, Painter } from '../parsePainter'
 import WebGL from '../../src/WebGL'
 import AudioMedia from '../AudioMedia'
 
-export const receiveMessagingHandler = async(
-    socket: SocketIOClient.Socket,
-    webGL: WebGL,
-    audioMedia: AudioMedia,
-    setMemberList: (list: any) => void
-  ) => {
+export const receiveMessagingHandler = async (
+  socket: SocketIOClient.Socket,
+  webGL: WebGL,
+  audioMedia: AudioMedia,
+  setMemberList: (list: any) => void
+) => {
   const peerList = {}
 
-  socket.on('addUser', async({ newEntryID, userName, memberList }) => {
+  socket.on('addUser', async ({ newEntryID, userName, memberList }) => {
     console.log(`join: ${newEntryID}, userName: ${userName}`)
     setMemberList(memberList)
 
-    if(!audioMedia.stream) return
+    if (!audioMedia.stream) return
     const peerConnection = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.test.com:19000' }]
+      iceServers: [{ urls: 'stun:stun.l.test.com:19000' }],
     })
     const audioTrack = audioMedia.getTrack
-    if(!audioTrack) return
+    if (!audioTrack) return
     peerConnection.addTrack(audioTrack, audioMedia.stream)
-    peerConnection.ontrack = async(event) => {
+    peerConnection.ontrack = async (event) => {
       const video = document.getElementById(newEntryID) as HTMLVideoElement
       video.srcObject = event.streams[0]
       await video.play()
     }
-    peerConnection.onicecandidate = ({candidate}) => {
-      if(!candidate) return
+    peerConnection.onicecandidate = ({ candidate }) => {
+      if (!candidate) return
       sendIceCandidate(socket, newEntryID, candidate)
     }
     const offer = await peerConnection.createOffer()
@@ -43,7 +43,7 @@ export const receiveMessagingHandler = async(
 
   socket.on('getMesh', (data) => {
     try {
-      parssePainter(webGL.scene, data)
+      parsePainter(webGL.scene, data)
     } catch (e) {
       console.error('Faild to synchronize scene', e)
     }
@@ -51,13 +51,13 @@ export const receiveMessagingHandler = async(
 
   socket.on('deleteMesh', (meshName: string) => {
     const deleteMesh = webGL.scene.getObjectByName(meshName)
-    if(!deleteMesh) return
+    if (!deleteMesh) return
     webGL.scene.remove(deleteMesh)
   })
 
   socket.on('deleteAllMesh', () => {
-    const target = webGL.scene.children.filter(mesh => mesh.type === 'Mesh')
-    target.forEach(mesh => {
+    const target = webGL.scene.children.filter((mesh) => mesh.type === 'Mesh')
+    target.forEach((mesh) => {
       // @ts-ignore
       mesh.geometry.dispose()
       // @ts-ignore
@@ -67,21 +67,21 @@ export const receiveMessagingHandler = async(
     webGL.renderer.renderLists.dispose()
   })
 
-  socket.on('getOffer', async ({senderID, sdp}) => {
-    if(!audioMedia.stream) return
+  socket.on('getOffer', async ({ senderID, sdp }) => {
+    if (!audioMedia.stream) return
     const peerConnection = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.test.com:19000' }]
+      iceServers: [{ urls: 'stun:stun.l.test.com:19000' }],
     })
     const audioTrack = audioMedia.getTrack
-    if(!audioTrack) return
+    if (!audioTrack) return
     peerConnection.addTrack(audioTrack, audioMedia.stream)
-    peerConnection.ontrack = async(event) => {
+    peerConnection.ontrack = async (event) => {
       const video = document.getElementById(senderID) as HTMLVideoElement
       video.srcObject = event.streams[0]
       await video.play()
     }
-    peerConnection.onicecandidate = ({candidate}) => {
-      if(!candidate) return
+    peerConnection.onicecandidate = ({ candidate }) => {
+      if (!candidate) return
       sendIceCandidate(socket, senderID, candidate)
     }
     peerConnection.setRemoteDescription(sdp)
@@ -92,18 +92,18 @@ export const receiveMessagingHandler = async(
     sendPeerAnswerHandler(socket, senderID, answer)
   })
 
-  socket.on('getAnswer', async ({senderID, sdp}) => {
+  socket.on('getAnswer', async ({ senderID, sdp }) => {
     const peerConnection: RTCPeerConnection = peerList[senderID]
     peerConnection.setRemoteDescription(sdp)
     peerList[senderID] = peerConnection
   })
 
-  socket.on('getIceCandidate', async({senderID, ice}) => {
+  socket.on('getIceCandidate', async ({ senderID, ice }) => {
     const peerConnection: RTCPeerConnection = peerList[senderID]
     await peerConnection?.addIceCandidate(new RTCIceCandidate(ice))
   })
 
-  socket.on('leaveUser', ({ id, memberList}) => {
+  socket.on('leaveUser', ({ id, memberList }) => {
     setMemberList(memberList)
     delete peerList[id]
   })
@@ -113,7 +113,10 @@ export const receiveMessagingHandler = async(
   })
 }
 
-export const deleteMeshHandler = (socket: SocketIOClient.Socket, name: string) => {
+export const deleteMeshHandler = (
+  socket: SocketIOClient.Socket,
+  name: string
+) => {
   socket.emit('deleteMesh', name)
 }
 
@@ -121,30 +124,45 @@ export const deleteAllMeshHandler = (socket: SocketIOClient.Socket) => {
   socket.emit('deleteAllMesh')
 }
 
-export const sendMeshHandler = (socket: SocketIOClient.Socket, data: Painter) => {
+export const sendMeshHandler = (
+  socket: SocketIOClient.Socket,
+  data: Painter
+) => {
   socket.emit('sendMesh', data)
 }
 
-export const sendPeerOfferHandler = (socket: SocketIOClient.Socket, targetID: string, offer: RTCSessionDescriptionInit) => {
+export const sendPeerOfferHandler = (
+  socket: SocketIOClient.Socket,
+  targetID: string,
+  offer: RTCSessionDescriptionInit
+) => {
   socket.emit('sendPeerOffer', {
     targetID: targetID,
     senderID: socket.id,
-    sdp: offer
+    sdp: offer,
   })
 }
 
-export const sendPeerAnswerHandler = async(socket: SocketIOClient.Socket, targetID: string, answer: RTCSessionDescriptionInit) => {
+export const sendPeerAnswerHandler = async (
+  socket: SocketIOClient.Socket,
+  targetID: string,
+  answer: RTCSessionDescriptionInit
+) => {
   socket.emit('sendPeerAnswer', {
     targetID: targetID,
     senderID: socket.id,
-    sdp: answer
+    sdp: answer,
   })
 }
 
-export const sendIceCandidate = (socket: SocketIOClient.Socket, targetID: string, ice: any) => {
+export const sendIceCandidate = (
+  socket: SocketIOClient.Socket,
+  targetID: string,
+  ice: any
+) => {
   socket.emit('sendIceCandidate', {
     targetID: targetID,
     senderID: socket.id,
-    ice: ice
+    ice: ice,
   })
 }
