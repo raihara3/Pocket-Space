@@ -10,8 +10,9 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -23,6 +24,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
+  "ignorePatterns": ["**/node_modules/**"],
   "rules": {
     "semi": ["error", "never", { "beforeStatementContinuationChars": "never" }],
     "semi-spacing": ["error", { "after": true, "before": false }],

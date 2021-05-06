@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-prettier"
+  ],
+  "processors": [
+    "stylelint-processor-styled-components"
+  ],
+  "ignoreFiles": [
+    "**/node_modules/**"
+  ]
+}

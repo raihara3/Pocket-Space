@@ -1,6 +1,9 @@
 {
-  "**/*.ts?(x)": [
-    "eslint --fix"
+  "**/*.{ts,tsx,js,json}": [
+    "eslint"
+  ],
+  "**/*.{css,scss,tsx}": [
+    "stylelint"
   ],
   "**/__tests__/**.ts?(x)": [
     "yarn test"
