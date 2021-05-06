@@ -1,38 +1,24 @@
-import RoomRepository from '../RoomRepository'
-import MemoryStorage from 'memorystorage'
-
-jest.mock('../RoomRepository')
-const RoomRepositoryMock = RoomRepository as jest.Mock
-
-const roomStorage = new MemoryStorage('db0')
-
-RoomRepositoryMock.mockImplementationOnce(() => {
+const RoomRepositoryMock = jest.fn((storage) => {
   return {
     add: (roomID: string) => {
-      return new Promise((resolve, _) => {
-        roomStorage.setItem(
-          roomID,
-          new Date().toLocaleString("ja-JP", {
-            timeZone: "Asia/Tokyo"
-          }).toString()
-        )
-        resolve('OK')
-      })
+      storage[roomID] = new Date()
+        .toLocaleString('ja-JP', {
+          timeZone: 'Asia/Tokyo',
+        })
+        .toString()
     },
 
     get: (_: string) => {
-      return RoomRepositoryMock.mockReturnValueOnce(
-        new Date().toLocaleString("ja-JP", {
-          timeZone: "Asia/Tokyo"
-        }).toString()
-      ).mockReturnValueOnce(undefined)
+      new Date()
+        .toLocaleString('ja-JP', {
+          timeZone: 'Asia/Tokyo',
+        })
+        .toString()
     },
 
-    getExpire: (_: string): Promise<number> => {
-      return new Promise((resolve, _) => {
-        resolve(60 * 60 * 24 * 3)
-      })
-    }
+    getExpire: (_: string) => {
+      return 60 * 60 * 24 * 3
+    },
   }
 })
 
