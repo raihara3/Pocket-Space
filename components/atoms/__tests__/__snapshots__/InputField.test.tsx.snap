@@ -6,7 +6,7 @@ exports[`disabled 1`] = `
 >
   <label>
     <input
-      className="InputField__Input-xsvhdm-1 dmqiXI"
+      className="InputField__Input-xsvhdm-1 fmbtXe"
       disabled={true}
       onChange={[Function]}
       placeholder="Input field"
@@ -22,7 +22,7 @@ exports[`hasError 1`] = `
 >
   <label>
     <input
-      className="InputField__Input-xsvhdm-1 dmqiXI"
+      className="InputField__Input-xsvhdm-1 fmbtXe"
       disabled={false}
       onChange={[Function]}
       placeholder="Input field"
@@ -43,7 +43,7 @@ exports[`normal 1`] = `
 >
   <label>
     <input
-      className="InputField__Input-xsvhdm-1 dmqiXI"
+      className="InputField__Input-xsvhdm-1 fmbtXe"
       disabled={false}
       onChange={[Function]}
       placeholder="Input field"
@@ -59,7 +59,7 @@ exports[`readOnly 1`] = `
 >
   <label>
     <input
-      className="InputField__Input-xsvhdm-1 jmKEkY"
+      className="InputField__Input-xsvhdm-1 gNtjQm"
       disabled={false}
       onChange={[Function]}
       placeholder="Input field"
