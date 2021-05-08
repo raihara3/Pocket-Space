@@ -1,0 +1,27 @@
+name: Lighthouse
+
+on:
+  schedule:
+    - cron: '0 22 * * *'
+
+jobs:
+  lighthouse-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - run: mkdir /tmp/artifacts
+      - name: Run Lighthouse
+        uses: foo-software/lighthouse-check-action@master
+        with:
+          accessToken: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
+          author: ${{ github.actor }}
+          branch: ${{ github.ref }}
+          outputDirectory: /tmp/artifacts
+          urls: 'https://armeet.raihara3.fun,https://armeet.raihara3.fun/remote/call'
+          sha: ${{ github.sha }}
+          slackWebhookUrl: ${{ secrets.LIGHTHOUSE_CHECK_WEBHOOK_URL }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: Lighthouse reports
+          path: /tmp/artifacts
