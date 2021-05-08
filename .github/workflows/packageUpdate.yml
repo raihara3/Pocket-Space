@@ -1,4 +1,4 @@
-name: Package manage
+name: Package Update
 
 on:
   schedule:
