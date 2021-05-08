@@ -4,8 +4,5 @@
   ],
   "**/*.{tsx,css}": [
     "stylelint"
-  ],
-  "**/__tests__/**.ts?(x)": [
-    "yarn test"
   ]
 }
