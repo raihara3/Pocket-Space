@@ -34,3 +34,6 @@ rules:
   semi:
     - error
     - never
+  # propsの検証を無視
+  react/prop-types:
+    - off
