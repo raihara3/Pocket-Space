@@ -59,8 +59,6 @@ const InputBox = styled.div`
 `
 
 const Input = styled.input<{ readonly: boolean }>`
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   resize: none;
   width: 100%;

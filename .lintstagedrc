@@ -1,8 +1,8 @@
 {
-  "**/*.{ts,tsx,json}": [
+  "**/*.{ts,tsx}": [
     "eslint --fix"
   ],
-  "**/*.tsx": [
+  "**/*.{tsx,css}": [
     "stylelint"
   ],
   "**/__tests__/**.ts?(x)": [

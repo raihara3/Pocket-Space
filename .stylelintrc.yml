@@ -1,0 +1,25 @@
+extends:
+  - 'stylelint-config-standard'
+  - 'stylelint-config-styled-components'
+  - 'stylelint-config-prettier'
+ignoreFiles:
+  - '**/node_modules/**'
+processors:
+  -
+    - 'stylelint-processor-styled-components'
+    - ignoreFiles:
+      - '**/*.css'
+rules:
+  # 無効なカラーコードを禁止
+  color-no-invalid-hex: true
+  # フォントファミリー名の重複を禁止
+  font-family-no-duplicate-names: true
+  # 無効なプロパティを禁止
+  property-no-unknown: true
+  # 空のブロックを禁止
+  block-no-empty: true
+  # css-in-jsで変数使用によるエラー回避
+  value-keyword-case:
+    - lower
+    - ignoreKeywords:
+      - 'dummyValue'

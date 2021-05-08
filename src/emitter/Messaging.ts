@@ -55,10 +55,6 @@ export const receiveMessagingHandler = async (
   socket.on('deleteAllMesh', () => {
     const target = webGL.scene.children.filter((mesh) => mesh.type === 'Mesh')
     target.forEach((mesh) => {
-      // @ts-ignore
-      mesh.geometry.dispose()
-      // @ts-ignore
-      mesh.material.dispose()
       webGL.scene.remove(mesh)
     })
     webGL.renderer.renderLists.dispose()
