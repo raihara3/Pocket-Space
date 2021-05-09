@@ -16,9 +16,10 @@ class Cursor {
   private color: string
 
   constructor(name: string, color?: string) {
-    const bufferSize = 40000
+    const BUFFER_SIZE = 40000
+    const ITEM_SIZE = 3
 
-    this.position = new BufferAttribute(new Float32Array(bufferSize), 3)
+    this.position = new BufferAttribute(new Float32Array(BUFFER_SIZE), ITEM_SIZE)
     this.position.usage = DynamicDrawUsage
     this.geometry = new BufferGeometry()
     this.geometry.setAttribute('position', this.position)

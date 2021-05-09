@@ -77,14 +77,15 @@ const Call = () => {
       history: new History(10),
     }
 
-    createToolBar(webGL.scene, socket, audioMedia, controller)
+    const toolBar = createToolBar(webGL.scene, socket, audioMedia, controller)
+    toolBar && webGL.scene.add(toolBar)
 
     controller.addEventListener('selectstart', () => {
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
-      const intersectButtons = webGL.raycaster.intersectObjects(
-        webGL.scene.children,
+      const intersectButtons = toolBar ? webGL.raycaster.intersectObject(
+        toolBar,
         true
-      )
+      ) : []
       if (intersectButtons.length) return
 
       const lineID = Math.random().toString(36).slice(-10)
@@ -99,10 +100,10 @@ const Call = () => {
       controller.userData.skipFrames = 2
 
       webGL.raycaster.setFromCamera(webGL.mouse, webGL.camera)
-      const intersectButtons = webGL.raycaster.intersectObjects(
-        webGL.scene.children,
+      const intersectButtons = toolBar ? webGL.raycaster.intersectObject(
+        toolBar,
         true
-      )
+      ) : []
       if (intersectButtons.length) {
         intersectButtons[0].object.dispatchEvent({ type: 'click' })
         return

@@ -40,7 +40,7 @@ export const createToolBar = (
   socket: SocketIOClient.Socket,
   audioMedia: AudioMedia,
   controller: Group
-) => {
+): Group | null => {
   const buttonList: Array<ButtonInfo> = [
     {
       name: 'red',
@@ -149,8 +149,8 @@ export const createToolBar = (
     height: 0.01,
     depth: 0.005,
   }).execute()
-  if (toolBar === null) return
+  if (toolBar === null) return null
 
   toolBar.position.set(0, -0.1, -0.1)
-  scene.add(toolBar)
+  return toolBar
 }
