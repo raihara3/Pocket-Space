@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
-import * as THREE from 'three'
+import {
+  Vector3,
+  BufferAttribute
+} from 'three'
 import io from 'socket.io-client'
 import styled from 'styled-components'
 import { Button, Link } from '@material-ui/core'
@@ -94,7 +97,7 @@ const Call = () => {
       controller.userData.painter = painter
       controller.userData.isSelecting = true
     })
-    const cursor = new THREE.Vector3()
+    const cursor = new Vector3()
     controller.addEventListener('selectend', () => {
       controller.userData.isSelecting = false
       controller.userData.skipFrames = 2
@@ -166,6 +169,11 @@ const Call = () => {
         'immersive-ar'
       )
       setIsSupported(isSessionSupported)
+
+      BufferAttribute.prototype.getX = function (index) { return this.array[index * this.itemSize] || 0 }
+      BufferAttribute.prototype.getY = function (index) { return this.array[index * this.itemSize + 1] || 0 }
+      BufferAttribute.prototype.getZ = function (index) { return this.array[index * this.itemSize + 2] || 0 }
+      BufferAttribute.prototype.getW = function (index) { return this.array[index * this.itemSize + 3] || 0 }
     })()
   }, [])
 
